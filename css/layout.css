@@ -1,0 +1,111 @@
+/* Container, nav, and footer layouts */
+.container {
+    width: min(1150px, 100% - 48px);
+    margin: 0 auto;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(254, 247, 255, 0.95);
+    border-bottom: 1px solid rgba(25, 25, 30, 0.05);
+    backdrop-filter: blur(18px);
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--offer-color-text);
+}
+
+.logo .material-symbols-outlined {
+    font-size: 26px;
+    color: var(--color-primary);
+}
+
+.brand-text {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(66, 133, 244, 0.25);
+    background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--color-primary);
+    backdrop-filter: blur(6px);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(66, 133, 244, 0.2);
+}
+
+.theme-toggle .material-symbols-outlined {
+    font-size: 22px;
+}
+
+.footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(var(--offer-color-gray-400-rgb), 0.2);
+    margin-top: 60px;
+}
+
+.footer p {
+    margin: 0;
+    text-align: center;
+    color: var(--offer-color-text-secondary);
+}
+
+[data-color-scheme="dark"] .navbar {
+    background: rgba(12, 16, 24, 0.92);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-color-scheme="dark"] .logo {
+    color: #E6E1E5;
+}
+
+[data-color-scheme="dark"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #E6E1E5;
+}
+
+[data-color-scheme="dark"] .footer {
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-color-scheme="dark"] .footer p {
+    color: rgba(255, 255, 255, 0.7);
+}
