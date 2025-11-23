@@ -1,5 +1,4 @@
-<<<<<<< Updated upstream
-=======
+
 /* Container, nav, and footer layouts */
 .container {
     width: min(1150px, 100% - 48px); 
@@ -315,4 +314,279 @@
 }
 /* Takım Sayfası Sonu*/
 
->>>>>>> Stashed changes
+/* ==== Team Detail Modal ==== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(59,130,246,0.25), transparent 55%),
+                rgba(15,23,42,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(18px);
+}
+
+.modal-overlay.active {
+    display: flex;
+    animation: overlayFadeIn 0.25s ease-out forwards;
+}
+
+.modal-container {
+    width: min(720px, 100% - 32px);
+    max-height: 82vh;
+    border-radius: 28px;
+    padding: 28px 28px 32px;
+    background: radial-gradient(circle at top left, #eef2ff, #f9fafb);
+    box-shadow:
+        0 28px 80px rgba(15,23,42,0.35),
+        0 0 0 1px rgba(148,163,184,0.35);
+    position: relative;
+    overflow-y: auto;
+    transform-origin: center center;
+    animation: modalPopIn 0.32s cubic-bezier(.21,.8,.29,1) forwards;
+}
+
+[data-color-scheme="dark"] .modal-container {
+    background: radial-gradient(circle at top left, #0f172a, #020617);
+    box-shadow:
+        0 28px 80px rgba(0,0,0,0.75),
+        0 0 0 1px rgba(148,163,184,0.35);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    border: none;
+    background: rgba(255,255,255,0.9);
+    border-radius: 999px;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(15,23,42,0.18);
+    color: #64748b;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+[data-color-scheme="dark"] .modal-close {
+    background: rgba(15,23,42,0.98);
+    color: #e5e7eb;
+}
+
+.modal-close .material-symbols-outlined {
+    font-size: 20px;
+}
+
+.modal-close:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 12px 26px rgba(15,23,42,0.28);
+    background: #ffffff;
+}
+
+/* Inner structure */
+
+.team-modal-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.team-modal-header {
+    text-align: center;
+    padding-top: 8px;
+}
+
+.team-modal-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #60a5fa;
+    margin-bottom: 4px;
+}
+
+.team-modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 4px;
+}
+
+.team-modal-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+[data-color-scheme="dark"] .team-modal-title {
+    color: #93c5fd;
+}
+
+[data-color-scheme="dark"] .team-modal-subtitle {
+    color: #9ca3af;
+}
+
+/* "Team About" section */
+
+.team-modal-about {
+    margin-top: 6px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(129,140,248,0.1), rgba(191,219,254,0.3));
+    border: 1px solid rgba(129,140,248,0.4);
+}
+
+[data-color-scheme="dark"] .team-modal-about {
+    background: linear-gradient(135deg, rgba(30,64,175,0.6), rgba(15,23,42,0.9));
+    border-color: rgba(129,140,248,0.55);
+}
+
+.team-modal-about-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1d4ed8;
+}
+
+.team-modal-about-text {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+[data-color-scheme="dark"] .team-modal-about-title {
+    color: #bfdbfe;
+}
+
+[data-color-scheme="dark"] .team-modal-about-text {
+    color: #e5e7eb;
+}
+
+/* Members grid */
+
+.team-modal-members {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+}
+
+/* Member cards – vertical card */
+
+.team-modal-member-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 18px 16px 16px;
+    box-shadow: 0 16px 40px rgba(148, 163, 184, 0.35);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.team-modal-member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px rgba(148, 163, 184, 0.5);
+}
+
+[data-color-scheme="dark"] .team-modal-member-card {
+    background: #020617;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.9);
+}
+
+@media (max-width: 600px) {
+    .team-modal-member-card {
+        text-align: center;
+    }
+}
+
+/* Avatar */
+
+.team-modal-member-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.team-modal-avatar-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    background: conic-gradient(from 210deg, #22c55e, #22d3ee, #3b82f6, #6366f1);
+    padding: 3px;
+    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45);
+}
+
+.team-modal-avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #1d4ed8;
+    font-size: 16px;
+}
+
+/* Name / role / bio */
+
+.team-modal-member-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    margin: 4px 0 2px;
+}
+
+.team-modal-member-role {
+    font-size: 13px;
+    color: #db4437;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.team-modal-member-bio {
+    font-size: 12px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+}
+
+[data-color-scheme="dark"] .team-modal-member-name {
+    color: #e5e7eb;
+}
+
+[data-color-scheme="dark"] .team-modal-member-bio {
+    color: #d1d5db;
+}
+
+/* Animations */
+
+@keyframes modalPopIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes floatAvatar {
+    from { transform: translateY(2px); }
+    to   { transform: translateY(-6px); }
+}

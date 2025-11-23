@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/base.css"> 
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500&display=swap" />
+
 </head>
 <body>
     
@@ -24,6 +27,16 @@
                 </div>
                 <div class="team-grid">
                     </div>
+
+                <!-- Team Detay Modal -->
+            <div id="teamModal" class="modal-overlay" aria-hidden="true">
+                <div class="modal-container">
+                    <button class="modal-close" id="closeTeamModal" aria-label="Close">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div class="modal-content" id="teamModalContent"></div>
+                </div>
+            </div>
                 
             </div> </section>
     </main>
