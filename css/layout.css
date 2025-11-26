@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+#header-placeholder {
+    min-height: 96px;
+}
+
 .navbar {
     position: sticky;
     top: 0;
@@ -12,6 +16,9 @@
     border-bottom: 1px solid rgba(25, 25, 30, 0.05);
     backdrop-filter: blur(18px);
     z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: headerFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
 }
 
 .navbar .container {
@@ -137,4 +144,15 @@
 
 [data-color-scheme="dark"] .footer p {
     color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes headerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
