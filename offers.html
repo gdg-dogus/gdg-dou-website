@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Offers - GDG on Campus DOU</title>
+    <meta name="description" content="Curated perks and free tools for students.">
+    
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages/offers.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main id="mainContent">
+        <section class="hero offers-hero">
+            <div class="hero-background">
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-3"></div>
+                <div class="hero-grid-lines"></div>
+            </div>
+            <div class="container">
+                <div class="offers-header">
+                    <span class="hero-eyebrow">Öğrencilere Özel Teklifler</span>
+                    <h1 class="hero-title"><span class="text-gradient">Öğrenci Olmanın</span> Faydalarını Keşfedin</h1>
+                    <p class="hero-subtitle">Öğrenci olarak ücretsiz edinebileceğiniz tekliflerden yararlanmanız için, size sunulan en iyi ücretsiz araç, yazılım ve kaynakları derlediğimiz bir koleksiyon.</p>
+                </div>
+
+                <div class="offers-controls">
+                    <div class="search-bar">
+                        <span class="material-symbols-outlined">search</span>
+                        <input type="text" id="offerSearch" placeholder="Teklifleri Arayın...">
+                    </div>
+                    <div class="filter-tags" id="categoryFilters">
+                        <button class="filter-tag active" data-category="all">Tümü</button>
+                        <button class="filter-tag" data-category="Dev Tools">Geliştirici Araçları</button>
+                        <button class="filter-tag" data-category="Productivity">Verimlilik</button>
+                        <button class="filter-tag" data-category="Design">Tasarım</button>
+                        <button class="filter-tag" data-category="Cloud">Bulut</button>
+                         <button class="filter-tag" data-category="Lifestyle">Yaşam Tarzı</button>
+                    </div>
+                </div>
+
+                <div class="offers-grid" id="offersGrid">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="offer-modal-overlay" id="offerModalOverlay">
+        <div class="offer-modal-container" id="offerModalContainer">
+            <div class="offer-modal-content">
+                <button class="modal-close" id="offerModalClose" aria-label="Close modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="offer-modal-header">
+                    <div class="offer-modal-logo-wrapper">
+                        <img src="" alt="Brand Logo" id="modalLogo" class="offer-modal-logo">
+                    </div>
+                    <div class="offer-modal-title-group">
+                        <h2 id="modalTitle">Offer Title</h2>
+                        <span class="offer-category-badge" id="modalCategory">Category</span>
+                    </div>
+                </div>
+
+                <div class="offer-modal-body">
+                    <p id="modalDescription" class="offer-full-description">Description goes here...</p>
+                    
+                    <div class="offer-claim-section">
+                        <h3><span class="material-symbols-outlined">how_to_reg</span> Tekliften Nasıl Yararlanabilirim?</h3>
+                        <ol class="claim-steps" id="modalClaimSteps">
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="offer-modal-footer">
+                    <a href="#" target="_blank" id="modalLink" class="btn btn-primary btn-full-width">
+                        Bu Tekliften Yararlanın
+                        <span class="material-symbols-outlined">open_in_new</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/renderers/offersRenderer.js"></script>
+</body>
+</html>

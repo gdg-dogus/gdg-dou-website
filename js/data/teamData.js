@@ -1,7 +1,7 @@
 // js/data/teamData.js
 
 // 1) TEAMS DESCRIPTION & MEMBERS
-const teams = {
+export const teams = {
 
     "Organizer": {
         key: "organizer",
@@ -82,7 +82,7 @@ const teams = {
 
 
 // 2) CORE TEAM CARD DATA
-var teamMembers = [
+export const teamMembers = [
     // --- Organizer / Assistant ---
 
     {
@@ -197,6 +197,71 @@ var teamMembers = [
         teamKey: "web",
         image: "images/logo.png",
         bio: "Kulübün web projelerini ve web sitesini geliştirmekten sorumludur.",
+        social: {
+            linkedin: "https://www.linkedin.com/in/dora-dikmen-2944a72ba/",
+            instagram: "https://www.instagram.com/",
+            github: "https://github.com/doradikmen"
+        },
+        teamAbout: teams["Web Development Team"].description
+    },
+    {
+        name: "Murat Ateş",
+        role: "Web Development Team",
+        teamKey: "web",
+        image: "images/logo.png",
+        bio: "Web geliştirme süreçlerinde teknik liderlik sağlar.",
+        social: {
+            linkedin: "#",
+            instagram: "#",
+            github: "#"
+        },
+        teamAbout: teams["Web Development Team"].description
+    },
+    {
+        name: "Fatiha Sarmusakcı",
+        role: "Web Development Team",
+        teamKey: "web",
+        image: "images/logo.png",
+        bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
+        social: {
+            linkedin: "#",
+            instagram: "#",
+            github: "#"
+        },
+        teamAbout: teams["Web Development Team"].description
+    },
+    {
+        name: "Ömer Can Ünlü",
+        role: "Web Development Team",
+        teamKey: "web",
+        image: "images/logo.png",
+        bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
+        social: {
+            linkedin: "#",
+            instagram: "#",
+            github: "#"
+        },
+        teamAbout: teams["Web Development Team"].description
+    },
+    {
+        name: "Dilan Özmen",
+        role: "Web Development Team",
+        teamKey: "web",
+        image: "images/logo.png",
+        bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
+        social: {
+            linkedin: "#",
+            instagram: "#",
+            github: "#"
+        },
+        teamAbout: teams["Web Development Team"].description
+    },
+    {
+        name: "Berat Aydın",
+        role: "Web Development Team",
+        teamKey: "web",
+        image: "images/logo.png",
+        bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
         social: {
             linkedin: "#",
             instagram: "#",

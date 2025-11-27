@@ -1,257 +1,92 @@
-// Kartların görünürlüğünü role göre ayarlayan filtreleme fonksiyonu
-function filterCards(filterValue) {
-    const cards = document.querySelectorAll('.team-card');
-    cards.forEach(card => {
-        const cardRole = card.getAttribute('data-role');
-        if (filterValue === 'all' || cardRole === filterValue) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
+import { translations } from "./translations.js";
 
-// Filtre butonlarının oluşturulması ve tıklama olaylarının eklenmesi
-function renderFilters(members) {
-    const roleFiltersContainer = document.getElementById('roleFilters');
-    if (!roleFiltersContainer) return;
+const loadComponent = async (selector, path) => {
+    const placeholder = document.querySelector(selector);
+    if (!placeholder) return null;
 
-    const uniqueRoles = [...new Set(members.map(member => member.role))];
-    const roleButtonsHTML = uniqueRoles
-        .map(
-            role => `
-        <button class="filter-btn" data-filter="${role}">${role}</button>
-    `
-        )
-        .join('');
+    try {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`Failed to load ${path}`);
 
-    roleFiltersContainer.innerHTML = roleButtonsHTML;
+        const html = await response.text();
+        const template = document.createElement("template");
+        template.innerHTML = html.trim();
 
-    const allFilterButtons = document.querySelectorAll('.filter-btn');
-
-    allFilterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filterValue = button.getAttribute('data-filter');
-            filterCards(filterValue);
-
-            allFilterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-        });
-    });
-}
-
-// teams objesinden key'e göre (org, web, mobile...) takım bilgisini bul
-function getTeamByKey(teamKey) {
-    const entry = Object.entries(teams).find(([_, t]) => t.key === teamKey);
-    if (!entry) return { label: '', team: null };
-    const [label, team] = entry;
-    return { label, team };
-}
-
-// teamKey'e göre o takıma ait üyeleri bul
-function getMembersForTeam(teamKey) {
-    return teamMembers.filter(m => m.teamKey === teamKey);
-}
-
-// Takım bazlı popup açan fonksiyon
-function openTeamModal(teamKey) {
-    const modal = document.getElementById('teamModal');
-    const modalContent = document.getElementById('teamModalContent');
-    if (!modal || !modalContent) return;
-
-    const { label: teamLabel, team } = getTeamByKey(teamKey);
-    if (!team) return;
-
-    // 1) core teamMembers içinden bu takıma ait olanlar (kaptanlar vb.)
-    const coreMembers = getMembersForTeam(teamKey);
-
-    // 2) teams[...] içindeki members listesinden, core’da olmayan ekstra isimler
-    const extraNames = (team.members || []).filter(
-        name => !coreMembers.some(m => m.name === name)
-    );
-
-    modalContent.innerHTML = `
-        <div class="team-modal-shell">
-            <header class="team-modal-header">
-                <h2 class="team-modal-title">${teamLabel}</h2>
-                <p class="team-modal-subtitle">Takım Üyeleri ve Sorumlulukları</p>
-            </header>
-
-            <section class="team-modal-about">
-                <h3 class="team-modal-about-title">Takım Hakkında</h3>
-                <p class="team-modal-about-text">
-                    ${team.description}
-                </p>
-            </section>
-
-            <section class="team-modal-members">
-                ${coreMembers
-                    .map(m => {
-                        const initials = m.name
-                            .split(' ')
-                            .map(part => part[0])
-                            .join('')
-                            .toUpperCase()
-                            .slice(0, 3);
-
-                        return `
-                        <article class="team-modal-member-card">
-                            <div class="team-modal-member-avatar">
-                                <div class="team-modal-avatar-circle">
-                                    <div class="team-modal-avatar-inner">
-                                        ${initials}
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="team-modal-member-name">${m.name}</h4>
-                            <p class="team-modal-member-role">${m.role}</p>
-                        </article>
-                    `;
-                    })
-                    .join('')}
-
-                ${extraNames
-                    .map(name => {
-                        const initials = name
-                            .split(' ')
-                            .map(part => part[0])
-                            .join('')
-                            .toUpperCase()
-                            .slice(0, 3);
-
-                        return `
-                        <article class="team-modal-member-card">
-                            <div class="team-modal-member-avatar">
-                                <div class="team-modal-avatar-circle">
-                                    <div class="team-modal-avatar-inner">
-                                        ${initials}
-                                    </div>
-                                </div>
-                            </div>
-                            <h4 class="team-modal-member-name">${name}</h4>
-                            <p class="team-modal-member-role">Team Member</p>
-                        </article>
-                    `;
-                    })
-                    .join('')}
-            </section>
-        </div>
-    `;
-
-    modal.setAttribute('aria-hidden', 'false');
-    modal.classList.add('active');
-}
-
-
-function closeTeamModal() {
-    const modal = document.getElementById('teamModal');
-    if (!modal) return;
-    modal.setAttribute('aria-hidden', 'true');
-    modal.classList.remove('active');
-}
-
-// Kartları HTML'e yerleştiren ana fonksiyon (Core Team)
-function renderCoreTeam(members) {
-    const teamGrid = document.querySelector('.team-grid');
-    if (!teamGrid) return;
-
-    teamGrid.innerHTML = '';
-
-    members.forEach((member, index) => {
-        const teamCard = document.createElement('article');
-        teamCard.className = 'team-card';
-
-        teamCard.style.opacity = '0';
-        teamCard.style.animationDelay = `${index * 0.08}s`;
-        teamCard.setAttribute('data-role', member.role);
-
-        teamCard.innerHTML = `
-            <div class="team-avatar">
-                <img src="${member.image}" alt="${member.name}">
-            </div>
-            <div class="team-info">
-                <h3 class="team-name">${member.name}</h3>
-                <p class="team-role">${member.role}</p>
-                <p class="team-bio">${member.bio}</p>
-            </div>
-            <div class="team-socials">
-                <a href="${member.social.linkedin}" target="_blank" aria-label="LinkedIn">
-                    <span class="material-symbols-outlined">linkedin</span>
-                </a>
-                <a href="${member.social.instagram || '#'}" target="_blank" aria-label="Instagram">
-                    <span class="material-symbols-outlined">person_pin</span>
-                </a>
-            </div>
-        `;
-
-        // Kart tıklanınca ilgili takım için popup aç
-        teamCard.addEventListener('click', () => {
-            openTeamModal(member.teamKey);
-        });
-
-        teamGrid.appendChild(teamCard);
-    });
-}
-
-// global tema + modal init
-document.addEventListener('DOMContentLoaded', () => {
-    // Modal close button / overlay / ESC
-    const modal = document.getElementById('teamModal');
-    const closeModalButton = document.getElementById('closeTeamModal');
-
-    if (closeModalButton) {
-        closeModalButton.addEventListener('click', closeTeamModal);
+        const fragment = template.content.cloneNode(true);
+        placeholder.replaceWith(fragment);
+    } catch (error) {
+        console.error(error);
     }
+};
 
-    if (modal) {
-        modal.addEventListener('click', e => {
-            if (e.target === modal) {
-                closeTeamModal();
-            }
-        });
-    }
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            closeTeamModal();
-        }
-    });
-
-    // Tema ayarları
+const initializeThemeToggle = () => {
     const html = document.documentElement;
-    const themeToggle = document.getElementById('themeToggle');
-    const themeToggleIcon = document.getElementById('themeToggleIcon');
+    const themeToggle = document.getElementById("themeToggle");
+    const themeToggleIcon = document.getElementById("themeToggleIcon");
 
-    const setTheme = theme => {
-        html.setAttribute('data-color-scheme', theme);
-        localStorage.setItem('theme', theme);
+    const setTheme = (theme) => {
+        html.setAttribute("data-color-scheme", theme);
+        localStorage.setItem("theme", theme);
 
         if (themeToggleIcon) {
-            themeToggleIcon.textContent =
-                theme === 'dark' ? 'light_mode' : 'dark_mode';
+            themeToggleIcon.textContent = theme === "dark" ? "light_mode" : "dark_mode";
         }
 
-        document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
+        document.dispatchEvent(new CustomEvent("themechange", { detail: theme }));
     };
 
-    const savedTheme =
-        localStorage.getItem('theme') ||
-        html.getAttribute('data-color-scheme') ||
-        'light';
+    const savedTheme = localStorage.getItem("theme") || html.getAttribute("data-color-scheme") || "light";
     setTheme(savedTheme);
 
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-color-scheme');
-            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        themeToggle.addEventListener("click", () => {
+            const currentTheme = html.getAttribute("data-color-scheme");
+            const nextTheme = currentTheme === "dark" ? "light" : "dark";
             setTheme(nextTheme);
         });
     }
+};
 
-    // Core team kartlarını çiz + filtreleri hazırla
-    if (typeof teamMembers !== 'undefined') {
-        renderCoreTeam(teamMembers);
-        renderFilters(teamMembers);
-        filterCards('all');
+const initializeTranslationToggle = () => {
+    const html = document.documentElement;
+    const translateToggle = document.getElementById("translateToggle");
+
+    const setLanguage = (lang) => {
+        localStorage.setItem("lang", lang);
+        html.setAttribute("data-lang", lang);
+    };
+
+    const savedLang = localStorage.getItem("lang") || "tr";
+    setLanguage(savedLang);
+
+    if (translateToggle) {
+        translateToggle.addEventListener("click", () => {
+            const current = html.getAttribute("data-lang") || "tr";
+            const next = current === "tr" ? "en" : "tr";
+            setLanguage(next);
+
+            window.location.reload();
+        });
     }
+
+    document.querySelectorAll("[data-key]").forEach((el) => {
+        const key = el.getAttribute("data-key");
+        const parentSpan = el.querySelector(".brand-text");
+
+        if (parentSpan) {
+            parentSpan.textContent = translations[savedLang][key];
+        } else {
+            el.innerHTML = translations[savedLang][key];
+        }
+    });
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await Promise.all([
+        loadComponent("#header-placeholder", "components/header.html"),
+        loadComponent("#footer-placeholder", "components/footer.html"),
+    ]);
+
+    initializeThemeToggle();
+    initializeTranslationToggle();
 });

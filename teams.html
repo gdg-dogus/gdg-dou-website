@@ -1,48 +1,54 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" data-color-scheme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ekip Sayfası</title>
+    <title>Ekip Sayfası - GDG on Campus DOU</title>
 
-    <link rel="stylesheet" href="css/base.css"> 
-    <link rel="stylesheet" href="css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500&display=swap" />
-
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages/team.css">
 </head>
-<body>
-    
+<body class="page-team">
+    <div id="header-placeholder"></div>
+
     <main>
-        <section class="section section-team"> 
-            <div class="container"> <div class="section-header">
-                    <h2>Ekibimizle Tanışın</h2> 
+        <section class="hero team-hero section-team">
+            <div class="hero-background">
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-2"></div>
+                <div class="hero-orb orb-3"></div>
+                <div class="hero-orb orb-4"></div>
+                <div class="hero-grid-lines"></div>
+            </div>
+            <div class="container">
+                <div class="section-header team-header">
+                    <span class="hero-eyebrow">Topluluğumuzu Güçlendiren Kadro</span>
+                    <h2>Ekibimizle Tanışın</h2>
+                    <p class="team-subtitle">Organizasyon, geliştirme, tasarım ve iletişim ekibimiz bir araya gelerek GDG on Campus DOU deneyimini oluşturuyor.</p>
                 </div>
 
-                <div class="filter-controls">
-                    <button class="filter-btn active" data-filter="all">Tüm Roller</button>
-                    <div id="roleFilters" style="display: inline;">
-                        </div>
-                </div>
-                <div class="team-grid">
+                <div class="team-grid"></div>
+
+                <div id="teamModal" class="modal-overlay" aria-hidden="true">
+                    <div class="modal-container">
+                        <button class="modal-close" id="closeTeamModal" aria-label="Close">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                        <div class="modal-content" id="teamModalContent"></div>
                     </div>
-
-                <!-- Team Detay Modal -->
-            <div id="teamModal" class="modal-overlay" aria-hidden="true">
-                <div class="modal-container">
-                    <button class="modal-close" id="closeTeamModal" aria-label="Close">
-                        <span class="material-symbols-outlined">close</span>
-                    </button>
-                    <div class="modal-content" id="teamModalContent"></div>
                 </div>
             </div>
-                
-            </div> </section>
+        </section>
     </main>
 
-    <script src="js/data/teamData.js"></script> 
-    <script src="js/main.js"></script> 
-    
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/renderers/teamRenderer.js"></script>
 </body>
 </html>
