@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Minimal Reader Test</title>
+	<link rel="stylesheet" href="../css/reader.css">
+</head>
+
+<body style="padding: 2rem; font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+
+	<h1>Simple Test Page</h1>
+
+	<!-- Reader Button Component -->
+	<div class="tts-reader-wrapper">
+		<button id="tts-reader-btn" class="tts-btn" aria-label="Read article aloud">
+			<svg class="tts-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+				xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+					fill="currentColor" />
+			</svg>
+			<span class="tts-text">Listen</span>
+		</button>
+
+		<div class="tts-controls" id="tts-controls" style="display: none;">
+			<button class="tts-control-btn" id="tts-play-pause" aria-label="Play/Pause">
+				<svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M8 5v14l11-7z" />
+				</svg>
+				<svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+					style="display: none;">
+					<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+				</svg>
+			</button>
+
+			<button class="tts-control-btn" id="tts-stop" aria-label="Stop">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M6 6h12v12H6z" />
+				</svg>
+			</button>
+
+			<div class="tts-speed">
+				<label for="tts-speed-select">Speed:</label>
+				<select id="tts-speed-select">
+					<option value="0.5">0.5x</option>
+					<option value="0.75">0.75x</option>
+					<option value="1" selected>1x</option>
+					<option value="1.25">1.25x</option>
+					<option value="1.5">1.5x</option>
+					<option value="2">2x</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<!-- Article Content -->
+	<div class="article-content">
+		<h2>Test Article</h2>
+		<p>This is a simple test article to demonstrate the text-to-speech reader button functionality.</p>
+		<p>The reader will read this entire content out loud when you click the Listen button.</p>
+		<p>You can pause, resume, stop, and change the reading speed using the controls that appear.</p>
+		<p>This is a great way to make your blog content more accessible to users who prefer listening over reading.</p>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="../js/reader.js"></script>
+</body>
+
+</html>

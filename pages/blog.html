@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self'; script-src 'self' 'unsafe-inline' https://code.jquery.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self';">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<title>Blog - GDG On Campus</title>
+
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/navbar.css">
+	<link rel="stylesheet" href="../css/footer.css">
+	<link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body>
+	<div id="navbar-container"></div>
+
+	<main class="main-content">
+		<section class="blog-page">
+			<div class="container">
+				<h1 class="section-title">Our Blog Posts</h1>
+
+				<div class="search-filter">
+					<div class="search-box">
+						<input type="search" class="search-input" placeholder="Search blog posts...">
+						<button class="search-btn">Search</button>
+					</div>
+
+					<div class="filter-section">
+						<span class="filter-label">Filter by:</span>
+						<div class="filter-buttons">
+							<button class="filter-btn active" data-category="All">All</button>
+							<button class="filter-btn" data-category="Technology">Technology</button>
+							<button class="filter-btn" data-category="Events">Events</button>
+							<button class="filter-btn" data-category="Community">Community</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="blog-grid">
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div id="footer-container"></div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<script src="../js/security.js"></script>
+	<script src="../js/componentRenderer.js"></script>
+	<script src="../js/blogRenderer.js"></script>
+</body>
+
+</html>

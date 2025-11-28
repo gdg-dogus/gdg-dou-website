@@ -1,26 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" data-color-scheme="light">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GDG On Campus DOU</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self'; script-src 'self' 'unsafe-inline' https://code.jquery.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self';">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<meta name="description"
+		content="Google Developer Groups On Campus - Join our vibrant community of developers, designers, and tech enthusiasts.">
+	<meta name="keywords" content="GDG, Google Developer Groups, university, technology, community">
+	<title>GDG On Campus - Home</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/navbar.css">
+	<link rel="stylesheet" href="css/footer.css">
 </head>
+
 <body>
-    <div id="header-placeholder"></div>
+	<div id="navbar-container"></div>
 
-    <main class="container">
-        
-    </main>
+	<main class="main-content">
+		<section class="hero">
+			<div class="hero-content">
+				<div class="hero-logos">
+					<img src="assets/google.png" alt="Google Logo" class="hero-logo">
+					<span class="logo-separator">×</span>
+					<img src="assets/dogus.png" alt="University Logo" class="hero-logo">
+				</div>
+				<h1><span class="gdg">Google Developer Groups</span><br>On Campus</h1>
+				<p>Join our vibrant community of developers, designers, and tech enthusiasts. Learn, build, and innovate
+					together with Google technologies.</p>
+				<div class="hero-buttons">
+					<a href="#" class="btn btn-primary">Join the Community</a>
+					<a href="#" class="btn btn-secondary">Upcoming Events</a>
+				</div>
+			</div>
+		</section>
 
-    <div id="footer-placeholder"></div>
+		<section class="statistics">
+			<div class="container">
+				<h2 class="section-title">Our Impact</h2>
+				<div class="stats-grid">
+				</div>
+			</div>
+		</section>
 
-    <script type="module" src="js/main.js"></script>
+		<section class="collaborations">
+			<div class="container">
+				<h2 class="section-title">Our Partners & Collaborations</h2>
+				<div class="collab-grid">
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<div id="footer-container"></div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+	<script src="js/security.js"></script>
+	<script src="js/componentRenderer.js"></script>
+	<script src="js/collabLoader.js"></script>
+	<script src="js/statsLoader.js"></script>
 </body>
+
 </html>
