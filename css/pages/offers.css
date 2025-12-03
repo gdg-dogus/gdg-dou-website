@@ -22,6 +22,7 @@
     opacity: 0.35;
     filter: blur(4px);
     animation: floatOrb 16s ease-in-out infinite;
+    animation-play-state: paused;
 }
 
 .orb-1 {
@@ -121,7 +122,6 @@
 
 .offer-card {
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
-    backdrop-filter: blur(20px);
     border: 1px solid rgba(66, 133, 244, 0.18);
     border-radius: 24px;
     padding: 32px;
@@ -619,5 +619,36 @@
     .offer-modal-container {
         width: 95%;
         max-height: 95vh;
+    }
+}
+
+/* Reduced motion preference for accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+    .hero-orb {
+        animation: none;
+        opacity: 0.3;
+    }
+    
+    .offers-header,
+    .offers-controls,
+    .offer-card {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    
+    .offer-card.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .offer-card:hover,
+    .offer-card:hover .offer-logo,
+    .offer-card:hover .offer-title::after {
+        transform: none;
+    }
+    
+    .offer-modal-container {
+        animation: none;
     }
 }

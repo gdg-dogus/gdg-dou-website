@@ -89,7 +89,7 @@ export const teamMembers = [
         name: "Arda Tezbaşaran",
         role: "Organizer",
         teamKey: "organizer",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "GDG on Campus Doğuş’un genel organizasyonundan ve topluluk vizyonunun yürütülmesinden sorumludur.",
         social: {
             linkedin: "#",
@@ -102,7 +102,7 @@ export const teamMembers = [
         name: "Serra Özbey",
         role: "Assistant Organizer",
         teamKey: "assistant_organizer",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Organizasyon süreçlerinde koordinasyona destek olur, ekipler arası iletişimi güçlendirir.",
         social: {
             linkedin: "#",
@@ -118,7 +118,7 @@ export const teamMembers = [
         name: "Kerem Kalyoncu",
         role: "Social Media & Design Team Lead",
         teamKey: "social",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Topluluğun sosyal medya içeriklerini ve görsel kimliğini yönetir.",
         social: {
             linkedin: "#",
@@ -134,7 +134,7 @@ export const teamMembers = [
         name: "Eylül Azra Karlıdağ",
         role: "Organization & Sponsorship Team Lead",
         teamKey: "org",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Şirketlerle iletişim kurar, etkinliklerin sahada sorunsuz ilerlemesini sağlar.",
         social: {
             linkedin: "#",
@@ -147,7 +147,7 @@ export const teamMembers = [
         name: "Tuğçe Yıldız",
         role: "Organization & Sponsorship Team Lead",
         teamKey: "org",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Organizasyon sürecinde ekip koordinasyonunu ve görev dağılımını destekler.",
         social: {
             linkedin: "#",
@@ -163,7 +163,7 @@ export const teamMembers = [
         name: "Yunus Turna",
         role: "Game Development Team Lead",
         teamKey: "game",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Oyun geliştirme etkinlikleri ve atölyelerinin koordinasyonundan sorumludur.",
         social: {
             linkedin: "#",
@@ -179,7 +179,7 @@ export const teamMembers = [
         name: "Batuhan Yavuz",
         role: "Mobile Development Team Lead",
         teamKey: "mobile",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Topluluğun mobil geliştirme projelerine liderlik eder, atölye ve eğitimler organize eder.",
         social: {
             linkedin: "#",
@@ -195,7 +195,7 @@ export const teamMembers = [
         name: "Dora Dikmen",
         role: "Web Development Team Lead",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Kulübün web projelerini ve web sitesini geliştirmekten sorumludur.",
         social: {
             linkedin: "https://www.linkedin.com/in/dora-dikmen-2944a72ba/",
@@ -208,7 +208,7 @@ export const teamMembers = [
         name: "Murat Ateş",
         role: "Web Development Team",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Web geliştirme süreçlerinde teknik liderlik sağlar.",
         social: {
             linkedin: "#",
@@ -221,7 +221,7 @@ export const teamMembers = [
         name: "Fatiha Sarmusakcı",
         role: "Web Development Team",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
         social: {
             linkedin: "#",
@@ -234,7 +234,7 @@ export const teamMembers = [
         name: "Ömer Can Ünlü",
         role: "Web Development Team",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
         social: {
             linkedin: "#",
@@ -247,7 +247,7 @@ export const teamMembers = [
         name: "Dilan Özmen",
         role: "Web Development Team",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
         social: {
             linkedin: "#",
@@ -260,7 +260,7 @@ export const teamMembers = [
         name: "Berat Aydın",
         role: "Web Development Team",
         teamKey: "web",
-        image: "images/logo.png",
+        image: "assets/logo.png",
         bio: "Kulübün web projelerinde geliştirici olarak görev alır.",
         social: {
             linkedin: "#",

@@ -1,4 +1,5 @@
 import { offersData } from '../data/offersData.js';
+import { observeVisibility, initOrbVisibilityControl, initPageVisibilityControl } from '../utils/observer.js';
 
 const initOffersPage = () => {
     const offersGrid = document.getElementById('offersGrid');
@@ -17,21 +18,9 @@ const initOffersPage = () => {
     let currentCategory = 'all';
     let searchQuery = '';
     let currentModalOffer = null;
-
-    const observer = 'IntersectionObserver' in window
-        ? new IntersectionObserver((entries, observerRef) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observerRef.unobserve(entry.target);
-                }
-            });
-        }, {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        })
-        : null;
+    
+    // Cache filter tag elements
+    let cachedFilterTags = null;
 
     const getCurrentTheme = () =>
         document.documentElement.getAttribute('data-color-scheme') ||
@@ -85,16 +74,12 @@ const initOffersPage = () => {
         filteredOffers.forEach((offer, index) => {
             const card = document.createElement('div');
             card.className = 'offer-card';
-            const cardDelay = index * 80;
-            card.style.transitionDelay = `${cardDelay}ms`;
-            setTimeout(() => {
-                card.style.transitionDelay = '';
-            }, cardDelay + 600);
+            card.dataset.delay = index;
 
             const logoSrc = getLogoForTheme(offer, themeForRender);
 
             card.innerHTML = `
-                <img src="${logoSrc}" alt="${offer.name}" class="offer-logo" data-offer-id="${offer.id}">
+                <img src="${logoSrc}" alt="${offer.name}" class="offer-logo" loading="lazy" decoding="async" data-offer-id="${offer.id}">
                 <div class="offer-content">
                     <h3 class="offer-title">${offer.name}</h3>
                     <p class="offer-desc">${offer.shortDescription}</p>
@@ -115,13 +100,7 @@ const initOffersPage = () => {
             card.addEventListener('click', () => openModal(offer));
             offersGrid.appendChild(card);
 
-            if (observer) {
-                observer.observe(card);
-                // Fallback just in case observer doesn't trigger
-                setTimeout(() => card.classList.add('is-visible'), 500);
-            } else {
-                card.classList.add('is-visible');
-            }
+            observeVisibility(card);
         });
     }
 
@@ -157,7 +136,11 @@ const initOffersPage = () => {
 
     categoryFilters.addEventListener('click', (e) => {
         if (e.target.classList.contains('filter-tag')) {
-            document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+            // Use cached filter tags or query once
+            if (!cachedFilterTags) {
+                cachedFilterTags = categoryFilters.querySelectorAll('.filter-tag');
+            }
+            cachedFilterTags.forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
 
             currentCategory = e.target.dataset.category;
@@ -181,6 +164,10 @@ const initOffersPage = () => {
 
     renderOffers();
     applyThemeToLogos();
+    
+    // Initialize orb visibility control for performance
+    initOrbVisibilityControl();
+    initPageVisibilityControl();
 
     document.addEventListener('themechange', (event) => {
         applyThemeToLogos(event.detail || getCurrentTheme());

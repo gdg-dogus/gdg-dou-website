@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - GDG on Campus DOU</title>
+    <meta name="description" content="Teknoloji, yazılım geliştirme ve Google teknolojileri hakkında blog yazıları.">
+    
+    <!-- Preconnect for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Material symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages/offers.css">
+    <link rel="stylesheet" href="css/pages/blog.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main id="mainContent">
+        <section class="hero blog-hero">
+            <div class="hero-background">
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-3"></div>
+                <div class="hero-grid-lines"></div>
+            </div>
+            <div class="container">
+                <div class="blog-header">
+                    <span class="hero-eyebrow">GDG DOU Blog</span>
+                    <h1 class="hero-title">
+                        <span class="text-gradient">Teknoloji Dünyasından</span> Haberler ve Rehberler
+                    </h1>
+                    <p class="hero-subtitle">
+                        Google teknolojileri, yazılım geliştirme, yapay zeka ve daha fazlası hakkında öğrenci topluluğumuz tarafından hazırlanan içerikler.
+                    </p>
+                </div>
+
+                <div class="blog-controls">
+                    <div class="search-bar">
+                        <span class="material-symbols-outlined">search</span>
+                        <input type="text" id="blogSearch" placeholder="Blog yazılarında ara...">
+                    </div>
+                    <div class="filter-tags" id="categoryFilters">
+                        <button class="filter-tag active" data-category="all">Tümü</button>
+                        <button class="filter-tag" data-category="Etkinlikler">Etkinlikler</button>
+                        <button class="filter-tag" data-category="Geliştirme">Geliştirme</button>
+                        <button class="filter-tag" data-category="Yapay Zeka">Yapay Zeka</button>
+                        <button class="filter-tag" data-category="Web">Web</button>
+                        <button class="filter-tag" data-category="Cloud">Cloud</button>
+                    </div>
+                </div>
+
+                <div class="blog-grid" id="blogGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="blog-modal-overlay" id="blogModalOverlay">
+        <div class="blog-modal-container" id="blogModalContainer">
+            <div class="blog-modal-content">
+                <button class="modal-close" id="blogModalClose" aria-label="Close modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                
+                <div class="blog-modal-header">
+                    <span class="blog-category" id="modalCategory">Kategori</span>
+                    <h2 class="blog-modal-title" id="modalTitle">Blog Başlığı</h2>
+                    <div class="blog-modal-meta">
+                        <div class="blog-modal-meta-item">
+                            <span class="material-symbols-outlined">person</span>
+                            <span id="modalAuthor">Yazar</span>
+                        </div>
+                        <div class="blog-modal-meta-item">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            <span id="modalDate">Tarih</span>
+                        </div>
+                        <div class="blog-modal-meta-item">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <span id="modalReadTime">Okuma süresi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-modal-body">
+                    <div class="blog-full-content" id="modalContent"></div>
+                </div>
+
+                <div class="blog-modal-footer">
+                    <div class="blog-share-section">
+                        <span class="blog-share-label">Paylaş:</span>
+                        <div class="blog-share-buttons">
+                            <button class="btn-share" id="shareTwitter" aria-label="Twitter'da paylaş">
+                                <span class="material-symbols-outlined">share</span>
+                            </button>
+                            <button class="btn-share" id="shareLinkedin" aria-label="LinkedIn'de paylaş">
+                                <span class="material-symbols-outlined">share</span>
+                            </button>
+                            <button class="btn-share" id="copyLink" aria-label="Linki kopyala">
+                                <span class="material-symbols-outlined">link</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/renderers/blogRenderer.js"></script>
+</body>
+</html>

@@ -5,22 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GDG On Campus DOU</title>
 
+    <!-- Preconnect for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages/home.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
 
-    <main class="container">
-        
+    <main id="mainContent">
+        <section class="hero home-hero">
+            <div class="hero-background">
+                <div class="hero-orb orb-1"></div>
+                <div class="hero-orb orb-2"></div>
+                <div class="hero-orb orb-3"></div>
+                <div class="hero-orb orb-4"></div>
+                <div class="hero-grid-lines"></div>
+            </div>
+            <div class="container">
+                <div class="home-header">
+                    <div class="hero-logos">
+                        <img src="assets/logo.png" alt="GDG On Campus DOU Logo" class="hero-logo">
+                    </div>
+                    <h1 class="hero-title"><span class="text-gradient">Google Developer Groups</span><br>On Campus</h1>
+                    <p class="hero-subtitle">Join our vibrant community of developers, designers, and tech enthusiasts. Learn, build, and innovate together with Google technologies.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">
+                            <span class="material-symbols-outlined">group_add</span>
+                            Join the Community
+                        </a>
+                        <a href="events.html" class="btn btn-secondary">
+                            <span class="material-symbols-outlined">event</span>
+                            Upcoming Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="statistics">
+            <div class="container">
+                <div class="section-header">
+                    <span class="hero-eyebrow">Our Impact</span>
+                    <h2 class="section-title">Community <span class="text-gradient">Statistics</span></h2>
+                </div>
+                <div class="stats-grid">
+                </div>
+            </div>
+        </section>
+
+        <section class="collaborations">
+            <div class="container">
+                <div class="section-header">
+                    <span class="hero-eyebrow">Partners</span>
+                    <h2 class="section-title">Our <span class="text-gradient">Collaborations</span></h2>
+                </div>
+                <div class="collab-grid">
+                </div>
+            </div>
+        </section>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/renderers/homeRenderer.js"></script>
 </body>
 </html>

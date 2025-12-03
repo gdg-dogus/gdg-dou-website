@@ -1,4 +1,5 @@
 import { teams, teamMembers } from "../data/teamData.js";
+import { observeVisibility, initOrbVisibilityControl, initPageVisibilityControl } from "../utils/observer.js";
 
 const SOCIAL_ICONS = {
     linkedin: `
@@ -173,37 +174,17 @@ const renderCoreTeam = (members) => {
         (member) => /lead/i.test(member.role) || /organizer/i.test(member.role)
     );
 
-    const observer =
-        "IntersectionObserver" in window
-            ? new IntersectionObserver(
-                  (entries, observerRef) => {
-                      entries.forEach((entry) => {
-                          if (entry.isIntersecting) {
-                              entry.target.classList.add("is-visible");
-                              observerRef.unobserve(entry.target);
-                          }
-                      });
-                  },
-                  { threshold: 0.1 }
-              )
-            : null;
-
     displayMembers.forEach((member, index) => {
         const teamCard = document.createElement("article");
         teamCard.className = "team-card";
 
         teamCard.setAttribute("data-role", member.role);
-
-        const cardDelay = index * 80;
-        teamCard.style.transitionDelay = `${cardDelay}ms`;
-        setTimeout(() => {
-            teamCard.style.transitionDelay = '';
-        }, cardDelay + 600);
+        teamCard.dataset.delay = index;
 
         const socialLinks = renderSocialLinks(member);
 
         teamCard.innerHTML = `
-            <img src="${member.image}" alt="${member.name}" class="team-logo">
+            <img src="${member.image}" alt="${member.name}" class="team-logo" loading="lazy" decoding="async">
             <div class="team-content">
                 <h3 class="team-title">${member.name}</h3>
                 <p class="team-role-tag">${member.role}</p>
@@ -230,12 +211,7 @@ const renderCoreTeam = (members) => {
 
         teamGrid.appendChild(teamCard);
 
-        if (observer) {
-            observer.observe(teamCard);
-            setTimeout(() => teamCard.classList.add("is-visible"), 600 + index * 40);
-        } else {
-            teamCard.classList.add("is-visible");
-        }
+        observeVisibility(teamCard);
     });
 };
 
@@ -262,6 +238,10 @@ const initTeamPage = () => {
     });
 
     renderCoreTeam(teamMembers);
+    
+    // Initialize orb visibility control for performance
+    initOrbVisibilityControl();
+    initPageVisibilityControl();
 };
 
 document.addEventListener("DOMContentLoaded", initTeamPage);
