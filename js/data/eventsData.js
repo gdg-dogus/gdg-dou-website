@@ -34,7 +34,7 @@ export const events = [
         shortTitle: "Info Session",
         date: "2025-10-17",
         time: "13:00",
-        location: "Doğuş Üniversitesi, Z-25 Hayat Boyu Öğrenme Odası",
+        location: "Doğuş Üniversitesi, Z-25 ",
         description:
             "Dönemin ilk etkinliğiyle kulübümüzü tanıttığımız, yeni üyelerle tanıştığımız ve birlikte akran öğrenmesi yaptığımız tanışma oturumu.",
         details: [
