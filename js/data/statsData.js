@@ -2,28 +2,28 @@ export const stats = [
 	{
 		"id": 1,
 		"number": 500,
-		"label": "Active Members",
+		"label": "Aktif Üye",
 		"color": "blue",
 		"suffix": "+"
 	},
 	{
 		"id": 2,
 		"number": 50,
-		"label": "Events Hosted",
+		"label": "Düzenlenen Etkinlik",
 		"color": "red",
 		"suffix": "+"
 	},
 	{
 		"id": 3,
 		"number": 100,
-		"label": "Projects Built",
+		"label": "Geliştirilen Proje",
 		"color": "yellow",
 		"suffix": "+"
 	},
 	{
 		"id": 4,
-		"number": 25,
-		"label": "Workshops",
+		"number": 10,
+		"label": "Atölye Çalışması",
 		"color": "green",
 		"suffix": "+"
 	}

@@ -7,42 +7,42 @@ const categoryConfig = {
         colorHex: '#4285F4',
         bgColor: 'var(--gdg-blue-ambient)',
         icon: 'emoji_events',
-        label: 'Summit'
+        label: 'Zirve'
     },
     tech_talk: {
         color: 'var(--gdg-green)',
         colorHex: '#34A853',
         bgColor: 'var(--gdg-green-ambient)',
         icon: 'mic',
-        label: 'Tech Talk'
+        label: 'Teknoloji Sohbeti'
     },
     workshop: {
         color: 'var(--gdg-yellow)',
         colorHex: '#FBBC04',
         bgColor: 'var(--gdg-yellow-ambient)',
         icon: 'construction',
-        label: 'Workshop'
+        label: 'Atölye'
     },
     study_jam: {
         color: 'var(--gdg-red)',
         colorHex: '#EA4335',
         bgColor: 'var(--gdg-red-ambient)',
         icon: 'school',
-        label: 'Study Jam'
+        label: 'Çalışma Etkinliği'
     },
     info_session: {
         color: 'var(--gdg-blue)',
         colorHex: '#4285F4',
         bgColor: 'var(--gdg-blue-ambient)',
         icon: 'info',
-        label: 'Info Session'
+        label: 'Bilgilendirme'
     },
     design: {
         color: '#9C27B0',
         colorHex: '#9C27B0',
         bgColor: 'rgba(156, 39, 176, 0.15)',
         icon: 'palette',
-        label: 'Design'
+        label: 'Tasarım'
     }
 };
 
@@ -51,9 +51,9 @@ function formatDate(dateString) {
     const date = new Date(dateString);
     return {
         day: date.getDate(),
-        month: date.toLocaleDateString('en-US', { month: 'short' }),
+        month: date.toLocaleDateString('tr-TR', { month: 'short' }),
         year: date.getFullYear(),
-        full: date.toLocaleDateString('en-US', { 
+        full: date.toLocaleDateString('tr-TR', { 
             weekday: 'long', 
             year: 'numeric', 
             month: 'long', 
@@ -133,18 +133,18 @@ function createEventCard(event) {
                         <div class="capacity-bar">
                             <div class="capacity-fill" style="width: ${progress}%; background: ${config.color};"></div>
                         </div>
-                        <span class="capacity-text">${spotsLeft > 0 ? `${spotsLeft} spots left` : 'Full'}</span>
+                        <span class="capacity-text">${spotsLeft > 0 ? `${spotsLeft} kişilik yer kaldı` : 'Dolu'}</span>
                     </div>
                     
                     ${upcoming ? `
                         <a href="#" class="btn btn-primary btn-sm event-register">
                             <span class="material-symbols-outlined">how_to_reg</span>
-                            Register
+                            Kayıt Ol
                         </a>
                     ` : `
                         <span class="event-past-badge">
                             <span class="material-symbols-outlined">check_circle</span>
-                            Completed
+                            Tamamlandı
                         </span>
                     `}
                 </div>
@@ -320,7 +320,7 @@ function openEventModal(eventId) {
                         <span class="material-symbols-outlined">calendar_month</span>
                     </div>
                     <div class="modal-meta-text">
-                        <span class="modal-meta-label">Date</span>
+                        <span class="modal-meta-label">Tarih</span>
                         <span class="modal-meta-value">${dateInfo.full}</span>
                     </div>
                 </div>
@@ -329,7 +329,7 @@ function openEventModal(eventId) {
                         <span class="material-symbols-outlined">schedule</span>
                     </div>
                     <div class="modal-meta-text">
-                        <span class="modal-meta-label">Time</span>
+                        <span class="modal-meta-label">Saat</span>
                         <span class="modal-meta-value">${event.time}</span>
                     </div>
                 </div>
@@ -338,7 +338,7 @@ function openEventModal(eventId) {
                         <span class="material-symbols-outlined">location_on</span>
                     </div>
                     <div class="modal-meta-text">
-                        <span class="modal-meta-label">Location</span>
+                        <span class="modal-meta-label">Konum</span>
                         <span class="modal-meta-value">${event.location}</span>
                     </div>
                 </div>
@@ -347,7 +347,7 @@ function openEventModal(eventId) {
                         <span class="material-symbols-outlined">group</span>
                     </div>
                     <div class="modal-meta-text">
-                        <span class="modal-meta-label">Organizer</span>
+                        <span class="modal-meta-label">Organizatör</span>
                         <span class="modal-meta-value">${event.organizer}</span>
                     </div>
                 </div>
@@ -356,7 +356,7 @@ function openEventModal(eventId) {
             <div class="modal-section">
                 <h3 class="modal-section-title">
                     <span class="material-symbols-outlined">description</span>
-                    About This Event
+                    Etkinlik Hakkında
                 </h3>
                 <p class="modal-description">${event.description}</p>
             </div>
@@ -365,7 +365,7 @@ function openEventModal(eventId) {
                 <div class="modal-section">
                     <h3 class="modal-section-title">
                         <span class="material-symbols-outlined">checklist</span>
-                        What You'll Learn
+                        Neler Öğreneceksiniz
                     </h3>
                     <ul class="modal-details-list">
                         ${event.details.map(detail => `<li>${detail}</li>`).join('')}
@@ -377,7 +377,7 @@ function openEventModal(eventId) {
                 <div class="modal-section">
                     <h3 class="modal-section-title">
                         <span class="material-symbols-outlined">record_voice_over</span>
-                        Speakers
+                        Konuşmacılar
                     </h3>
                     <div class="modal-speakers-grid">
                         ${event.speakers.map(speaker => `
@@ -394,7 +394,7 @@ function openEventModal(eventId) {
                 <div class="modal-section">
                     <h3 class="modal-section-title">
                         <span class="material-symbols-outlined">sell</span>
-                        Tags
+                        Etiketler
                     </h3>
                     <div class="modal-tags">
                         ${event.tags.map(tag => `<span class="modal-tag">#${tag}</span>`).join('')}
@@ -406,8 +406,8 @@ function openEventModal(eventId) {
         <div class="modal-footer">
             <div class="modal-capacity">
                 <div class="modal-capacity-header">
-                    <span class="modal-capacity-label">Registration</span>
-                    <span class="modal-capacity-value">${event.registered} / ${event.spots} registered</span>
+                    <span class="modal-capacity-label">Kayıt Durumu</span>
+                    <span class="modal-capacity-value">${event.registered} / ${event.spots} kayıtlı</span>
                 </div>
                 <div class="modal-capacity-bar">
                     <div class="modal-capacity-fill" style="width: ${progress}%; background: ${config.colorHex};"></div>
@@ -417,12 +417,12 @@ function openEventModal(eventId) {
             ${upcoming ? `
                 <a href="#" class="btn btn-primary modal-register-btn">
                     <span class="material-symbols-outlined">how_to_reg</span>
-                    Register Now
+                    Şimdi Kayıt Ol
                 </a>
             ` : `
                 <span class="modal-past-badge">
                     <span class="material-symbols-outlined">check_circle</span>
-                    Event Completed
+                    Etkinlik Tamamlandı
                 </span>
             `}
         </div>

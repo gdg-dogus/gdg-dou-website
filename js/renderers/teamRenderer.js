@@ -84,7 +84,7 @@ const openTeamModal = (teamKey) => {
             <header class="team-modal-header">
                 <div class="team-modal-title-row">
                     <h2 class="team-modal-title">${teamLabel}</h2>
-                    <span class="offer-category-badge">${team.captain || "Team Lead"}</span>
+                    <span class="offer-category-badge">${team.captain || "Takım Lideri"}</span>
                 </div>
                 <p class="team-modal-subtitle">Takım Üyeleri ve Sorumlulukları</p>
             </header>
@@ -144,7 +144,7 @@ const openTeamModal = (teamKey) => {
                                 </div>
                             </div>
                             <h4 class="team-modal-member-name">${name}</h4>
-                            <p class="team-modal-member-role">Team Member</p>
+                            <p class="team-modal-member-role">Takım Üyesi</p>
                         </article>
                     `;
                     })

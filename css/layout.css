@@ -68,6 +68,11 @@
 .logo img {
     width: 4rem;
     height: auto;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 .logo .material-symbols-outlined {
@@ -166,11 +171,11 @@
 }
 
 .footer-logo {
-    height: 70px;
-    width: auto;
+    height: auto;
+    width: 4rem;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(66, 133, 244, 0.15));
-    transition: transform 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .footer-logo:hover {

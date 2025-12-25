@@ -85,7 +85,7 @@ export const events = [
         shortTitle: "Frontend 101 Bootcamp",
         date: "2026-03-10",
         time: "10:00",
-        location: "Doğuş Üniversitesi, Lab-1 (TBD)",
+        location: "Doğuş Üniversitesi, Lab-1",
         description:
             "Frontend geliştirmeye giriş yapmak isteyenler için yoğunlaştırılmış bir gün: HTML yapısı, modern CSS stilleri ve temel JavaScript mantığı.",
         details: [
@@ -108,7 +108,7 @@ export const events = [
         shortTitle: "Cloud Study Jam",
         date: "2026-04-05",
         time: "12:00",
-        location: "Doğuş Üniversitesi, B Blok (TBD)",
+        location: "Doğuş Üniversitesi, B Blok",
         description:
             "Google Cloud Platform temellerini elden geçirip birlikte lab’ler yapacağımız uygulamalı bir study jam.",
         details: [
@@ -131,7 +131,7 @@ export const events = [
         shortTitle: "Design Sprint",
         date: "2026-05-02",
         time: "11:00",
-        location: "Doğuş Üniversitesi, Tasarım Atölyesi (TBD)",
+        location: "Doğuş Üniversitesi, Tasarım Atölyesi",
         description:
             "Ürün fikrini bir gün içinde kullanıcı odaklı prototipe dönüştürmek için hızlı ilerleyen bir design sprint.",
         details: [
