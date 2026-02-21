@@ -1,68 +1,65 @@
 import { events } from '../data/eventsData.js';
 
-// Category configuration with colors and icons
 const categoryConfig = {
     summit: {
         color: 'var(--gdg-blue)',
         colorHex: '#4285F4',
         bgColor: 'var(--gdg-blue-ambient)',
         icon: 'emoji_events',
-        label: 'Zirve'
+        label: 'Summit'
     },
     tech_talk: {
         color: 'var(--gdg-green)',
         colorHex: '#34A853',
         bgColor: 'var(--gdg-green-ambient)',
         icon: 'mic',
-        label: 'Teknoloji Sohbeti'
+        label: 'Tech Talk'
     },
     workshop: {
         color: 'var(--gdg-yellow)',
         colorHex: '#FBBC04',
         bgColor: 'var(--gdg-yellow-ambient)',
         icon: 'construction',
-        label: 'Atölye'
+        label: 'Workshop'
     },
     study_jam: {
         color: 'var(--gdg-red)',
         colorHex: '#EA4335',
         bgColor: 'var(--gdg-red-ambient)',
         icon: 'school',
-        label: 'Çalışma Etkinliği'
+        label: 'Study Jam'
     },
     info_session: {
         color: 'var(--gdg-blue)',
         colorHex: '#4285F4',
         bgColor: 'var(--gdg-blue-ambient)',
         icon: 'info',
-        label: 'Bilgilendirme'
+        label: 'Info Session'
     },
     design: {
-        color: '#9C27B0',
-        colorHex: '#9C27B0',
-        bgColor: 'rgba(156, 39, 176, 0.15)',
+        color: 'var(--gdg-blue)',
+        colorHex: '#4285F4',
+        bgColor: 'var(--gdg-blue-ambient)',
         icon: 'palette',
-        label: 'Tasarım'
+        label: 'Design'
     }
 };
 
-// Format date for display
 function formatDate(dateString) {
     const date = new Date(dateString);
     return {
         day: date.getDate(),
-        month: date.toLocaleDateString('tr-TR', { month: 'short' }),
+        month: date.toLocaleDateString('en-US', { month: 'short' }),
         year: date.getFullYear(),
-        full: date.toLocaleDateString('tr-TR', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        full: date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         })
     };
 }
 
-// Check if event is upcoming
 function isUpcoming(dateString) {
     const eventDate = new Date(dateString);
     const today = new Date();
@@ -70,26 +67,24 @@ function isUpcoming(dateString) {
     return eventDate >= today;
 }
 
-// Calculate registration progress
 function getRegistrationProgress(registered, spots) {
     return Math.min((registered / spots) * 100, 100);
 }
 
-// Create event card element
 function createEventCard(event) {
     const config = categoryConfig[event.category] || categoryConfig.tech_talk;
     const dateInfo = formatDate(event.date);
     const upcoming = isUpcoming(event.date);
     const progress = getRegistrationProgress(event.registered, event.spots);
     const spotsLeft = event.spots - event.registered;
-    
+
     const eventCard = document.createElement('article');
     eventCard.className = `event-card ${upcoming ? 'upcoming' : 'past'} category-${event.category}`;
     eventCard.setAttribute('data-category', event.category);
     eventCard.setAttribute('data-date', event.date);
     eventCard.setAttribute('data-event-id', event.id);
     eventCard.style.cursor = 'pointer';
-    
+
     eventCard.innerHTML = `
         <div class="event-card-inner">
             <div class="event-image-wrapper">
@@ -133,61 +128,58 @@ function createEventCard(event) {
                         <div class="capacity-bar">
                             <div class="capacity-fill" style="width: ${progress}%; background: ${config.color};"></div>
                         </div>
-                        <span class="capacity-text">${spotsLeft > 0 ? `${spotsLeft} kişilik yer kaldı` : 'Dolu'}</span>
                     </div>
-                    
-                    ${upcoming ? `
-                        <a href="#" class="btn btn-primary btn-sm event-register">
-                            <span class="material-symbols-outlined">how_to_reg</span>
-                            Kayıt Ol
-                        </a>
-                    ` : `
-                        <span class="event-past-badge">
-                            <span class="material-symbols-outlined">check_circle</span>
-                            Tamamlandı
-                        </span>
-                    `}
+                    <div class="event-footer-bottom">
+                        <span class="capacity-text">${spotsLeft > 0 ? `${spotsLeft} spots left` : 'Full'}</span>
+
+                        ${upcoming ? `
+                            <span class="register-separator" aria-hidden="true"></span>
+                            <button type="button" class="btn btn-outline event-register">
+                                <span>Register</span>
+                                <span class="material-symbols-outlined">person_add</span>
+                            </button>
+                        ` : `
+                            <span class="event-past-badge">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Completed
+                            </span>
+                        `}
+                    </div>
                 </div>
             </div>
         </div>
     `;
-    
+
     return eventCard;
 }
 
-// Filter and render events
 function renderEvents(category = 'all', timeFilter = 'upcoming') {
     const eventsGrid = document.getElementById('eventsGrid');
     const noEventsMessage = document.getElementById('noEventsMessage');
-    
+
     if (!eventsGrid) return;
-    
-    // Clear existing events
+
     eventsGrid.innerHTML = '';
-    
-    // Filter events
+
     let filteredEvents = events.filter(event => {
         const categoryMatch = category === 'all' || event.category === category;
         const timeMatch = timeFilter === 'upcoming' ? isUpcoming(event.date) : !isUpcoming(event.date);
         return categoryMatch && timeMatch;
     });
-    
-    // Sort events by date
+
     filteredEvents.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         return timeFilter === 'upcoming' ? dateA - dateB : dateB - dateA;
     });
-    
-    // Show/hide no events message
+
     if (filteredEvents.length === 0) {
         noEventsMessage.style.display = 'flex';
         eventsGrid.style.display = 'none';
     } else {
         noEventsMessage.style.display = 'none';
         eventsGrid.style.display = 'grid';
-        
-        // Render event cards with staggered animation
+
         filteredEvents.forEach((event, index) => {
             const card = createEventCard(event);
             card.style.animationDelay = `${index * 0.1}s`;
@@ -196,45 +188,39 @@ function renderEvents(category = 'all', timeFilter = 'upcoming') {
     }
 }
 
-// Initialize filters
 function initializeFilters() {
-    const categoryTabs = document.querySelectorAll('.filter-tab');
+    const categoryTags = document.querySelectorAll('.filter-tag');
     const toggleBtns = document.querySelectorAll('.toggle-btn');
-    
+
     let currentCategory = 'all';
     let currentTimeFilter = 'upcoming';
-    // create sliding underline
-    const tabsWrapper = document.querySelector('.filter-tabs');
+
+    const tagsWrapper = document.querySelector('.filter-tags');
     let underline = null;
-    if (tabsWrapper) {
+    if (tagsWrapper) {
         underline = document.createElement('div');
         underline.className = 'filter-underline';
-        tabsWrapper.appendChild(underline);
+        tagsWrapper.appendChild(underline);
     }
 
-    function moveUnderlineTo(tab) {
-        if (!underline || !tab) return;
-        const left = tab.offsetLeft;
-        const width = tab.offsetWidth;
+    function moveUnderlineTo(tag) {
+        if (!underline || !tag) return;
+        const left = tag.offsetLeft;
+        const width = tag.offsetWidth;
         underline.style.left = `${left}px`;
         underline.style.width = `${width}px`;
     }
-    
-    // helper: animate grid then render
+
     const eventsGrid = document.getElementById('eventsGrid');
     function animateAndRender(category, timeFilter) {
         if (!eventsGrid) return renderEvents(category, timeFilter);
-        // exit animation
         eventsGrid.classList.add('is-exiting');
-        // after exit, render new content and play enter animation
         setTimeout(() => {
             renderEvents(category, timeFilter);
             eventsGrid.classList.remove('is-exiting');
             eventsGrid.classList.add('is-entering');
-            // force repaint then activate
             requestAnimationFrame(() => {
                 eventsGrid.classList.add('active');
-                // remove entering classes after animation
                 setTimeout(() => {
                     eventsGrid.classList.remove('is-entering');
                     eventsGrid.classList.remove('active');
@@ -243,239 +229,255 @@ function initializeFilters() {
         }, 240);
     }
 
-    // Category filter handlers
-    categoryTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            categoryTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            currentCategory = tab.dataset.category;
-            // move underline immediately
-            moveUnderlineTo(tab);
+    categoryTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            categoryTags.forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+            currentCategory = tag.dataset.category;
+            moveUnderlineTo(tag);
             animateAndRender(currentCategory, currentTimeFilter);
         });
     });
-    
-    // Time filter handlers
+
+    const toggleContainer = document.querySelector('.filter-toggle');
+    let slider = null;
+
+    if (toggleContainer) {
+        slider = document.createElement('div');
+        slider.className = 'toggle-slider no-transition';
+        toggleContainer.appendChild(slider);
+    }
+
+    function updateSlider() {
+        const activeBtn = document.querySelector('.toggle-btn.active');
+        if (activeBtn && slider) {
+            slider.style.width = `${activeBtn.offsetWidth}px`;
+            slider.style.transform = `translateX(${activeBtn.offsetLeft - 6}px)`;
+        }
+    }
+
+    if (slider) {
+        requestAnimationFrame(() => {
+            updateSlider();
+            slider.offsetHeight;
+            slider.classList.remove('no-transition');
+        });
+
+        window.addEventListener('resize', () => {
+            slider.classList.add('no-transition');
+            updateSlider();
+            slider.offsetHeight;
+            slider.classList.remove('no-transition');
+        });
+    }
+
     toggleBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             toggleBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTimeFilter = btn.dataset.filter;
+            if (slider) updateSlider();
             animateAndRender(currentCategory, currentTimeFilter);
         });
     });
 
-    // position underline on load and on resize
     window.addEventListener('load', () => {
-        const active = document.querySelector('.filter-tab.active');
+        const active = document.querySelector('.filter-tag.active');
         if (active) moveUnderlineTo(active);
     });
     window.addEventListener('resize', () => {
-        const active = document.querySelector('.filter-tab.active');
+        const active = document.querySelector('.filter-tag.active');
         if (active) moveUnderlineTo(active);
     });
+
+    const activeInitial = document.querySelector('.filter-tag.active');
+    if (activeInitial) moveUnderlineTo(activeInitial);
 }
 
-// Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
     renderEvents('all', 'upcoming');
     initializeFilters();
     initializeModal();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventIdParam = urlParams.get('eventId');
+    if (eventIdParam) {
+        setTimeout(() => {
+            openEventModal(eventIdParam);
+        }, 100);
+    }
 });
 
-// ==================== //
-// Modal Functionality  //
-// ==================== //
 
 function openEventModal(eventId) {
     const event = events.find(e => e.id === eventId);
     if (!event) return;
-    
+
     const modal = document.getElementById('eventModal');
-    const modalContent = document.getElementById('modalContent');
-    
+    const modalBody = document.getElementById('eventModalBody');
+
     const config = categoryConfig[event.category] || categoryConfig.tech_talk;
     const dateInfo = formatDate(event.date);
     const upcoming = isUpcoming(event.date);
-    const progress = getRegistrationProgress(event.registered, event.spots);
-    const spotsLeft = event.spots - event.registered;
-    
-    modalContent.innerHTML = `
-        <div class="modal-header">
-            ${event.image ? `<img src="${event.image}" alt="${event.title}" class="modal-header-image">` : ''}
-            <div class="modal-header-overlay"></div>
-            <div class="modal-header-content">
-                <div class="modal-category-badge" style="background: ${config.colorHex};">
-                    <span class="material-symbols-outlined">${config.icon}</span>
-                    ${config.label}
-                </div>
-                <h2 class="modal-title">${event.title}</h2>
-            </div>
-        </div>
-        
-        <div class="modal-body">
-            <div class="modal-meta-grid">
-                <div class="modal-meta-item">
-                    <div class="modal-meta-icon" style="background: ${config.colorHex};">
-                        <span class="material-symbols-outlined">calendar_month</span>
-                    </div>
-                    <div class="modal-meta-text">
-                        <span class="modal-meta-label">Tarih</span>
-                        <span class="modal-meta-value">${dateInfo.full}</span>
-                    </div>
-                </div>
-                <div class="modal-meta-item">
-                    <div class="modal-meta-icon" style="background: var(--gdg-green);">
-                        <span class="material-symbols-outlined">schedule</span>
-                    </div>
-                    <div class="modal-meta-text">
-                        <span class="modal-meta-label">Saat</span>
-                        <span class="modal-meta-value">${event.time}</span>
-                    </div>
-                </div>
-                <div class="modal-meta-item">
-                    <div class="modal-meta-icon" style="background: var(--gdg-red);">
-                        <span class="material-symbols-outlined">location_on</span>
-                    </div>
-                    <div class="modal-meta-text">
-                        <span class="modal-meta-label">Konum</span>
-                        <span class="modal-meta-value">${event.location}</span>
-                    </div>
-                </div>
-                <div class="modal-meta-item">
-                    <div class="modal-meta-icon" style="background: var(--gdg-yellow);">
-                        <span class="material-symbols-outlined">group</span>
-                    </div>
-                    <div class="modal-meta-text">
-                        <span class="modal-meta-label">Organizatör</span>
-                        <span class="modal-meta-value">${event.organizer}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h3 class="modal-section-title">
-                    <span class="material-symbols-outlined">description</span>
-                    Etkinlik Hakkında
-                </h3>
-                <p class="modal-description">${event.description}</p>
-            </div>
-            
-            ${event.details && event.details.length > 0 ? `
-                <div class="modal-section">
-                    <h3 class="modal-section-title">
-                        <span class="material-symbols-outlined">checklist</span>
-                        Neler Öğreneceksiniz
-                    </h3>
-                    <ul class="modal-details-list">
-                        ${event.details.map(detail => `<li>${detail}</li>`).join('')}
-                    </ul>
-                </div>
-            ` : ''}
-            
-            ${event.speakers && event.speakers.length > 0 ? `
-                <div class="modal-section">
-                    <h3 class="modal-section-title">
-                        <span class="material-symbols-outlined">record_voice_over</span>
-                        Konuşmacılar
-                    </h3>
-                    <div class="modal-speakers-grid">
-                        ${event.speakers.map(speaker => `
-                            <div class="modal-speaker-tag">
-                                <span class="material-symbols-outlined">person</span>
-                                ${speaker}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
-            
-            ${event.tags && event.tags.length > 0 ? `
-                <div class="modal-section">
-                    <h3 class="modal-section-title">
-                        <span class="material-symbols-outlined">sell</span>
-                        Etiketler
-                    </h3>
-                    <div class="modal-tags">
-                        ${event.tags.map(tag => `<span class="modal-tag">#${tag}</span>`).join('')}
-                    </div>
-                </div>
-            ` : ''}
-        </div>
-        
-        <div class="modal-footer">
-            <div class="modal-capacity">
-                <div class="modal-capacity-header">
-                    <span class="modal-capacity-label">Kayıt Durumu</span>
-                    <span class="modal-capacity-value">${event.registered} / ${event.spots} kayıtlı</span>
-                </div>
-                <div class="modal-capacity-bar">
-                    <div class="modal-capacity-fill" style="width: ${progress}%; background: ${config.colorHex};"></div>
-                </div>
-            </div>
-            
-            ${upcoming ? `
-                <a href="#" class="btn btn-primary modal-register-btn">
-                    <span class="material-symbols-outlined">how_to_reg</span>
-                    Şimdi Kayıt Ol
-                </a>
-            ` : `
-                <span class="modal-past-badge">
-                    <span class="material-symbols-outlined">check_circle</span>
-                    Etkinlik Tamamlandı
+    const spotsLeft = Math.max(event.spots - event.registered, 0);
+
+    const categoryIcon = {
+        'summit': 'emoji_events',
+        'tech_talk': 'campaign',
+        'workshop': 'construction',
+        'study_jam': 'school',
+        'info_session': 'info',
+        'design': 'palette'
+    };
+
+    modalBody.innerHTML = `
+        <div class="event-modal-header">
+            <div class="event-modal-category" style="background: ${config.colorHex};">
+                <span class="material-symbols-outlined">
+                    ${categoryIcon[event.category] || config.icon}
                 </span>
-            `}
+                ${config.label}
+            </div>
+            <h1 class="event-modal-title">${event.title}</h1>
+            <div class="event-modal-meta">
+                <div class="event-modal-meta-item">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    ${dateInfo.full}
+                </div>
+                <div class="event-modal-meta-item">
+                    <span class="material-symbols-outlined">schedule</span>
+                    ${event.time}
+                </div>
+                <div class="event-modal-meta-item">
+                    <span class="material-symbols-outlined">location_on</span>
+                    ${event.location}
+                </div>
+                <div class="event-modal-meta-item">
+                    <span class="material-symbols-outlined">group</span>
+                    ${spotsLeft > 0 ? `${spotsLeft} spots left` : 'Full'}
+                </div>
+            </div>
+        </div>
+        
+        <div class="event-modal-body">
+            <div class="event-image-placeholder">
+                <span class="material-symbols-outlined">image</span>
+                <p>Geçici Etkinlik Resmi</p>
+                <small>Etkinlik tanıtım resmi burada gösterilecek</small>
+            </div>
+            
+            <div class="event-description">
+                <h3>Event Description</h3>
+                <p>${event.description}</p>
+            </div>
+            
+            <div class="event-details-grid">
+                ${event.speakers && event.speakers.length > 0 ? `
+                    <div class="event-detail-card">
+                        <h4><span class="material-symbols-outlined">record_voice_over</span>Speakers</h4>
+                        ${event.speakers.map(speaker => `<p>${speaker}</p>`).join('')}
+                    </div>
+                ` : event.organizer ? `
+                    <div class="event-detail-card">
+                        <h4><span class="material-symbols-outlined">person</span>Organizer</h4>
+                        <p>${event.organizer}</p>
+                    </div>
+                ` : ''}
+                
+                ${event.details && event.details.length > 0 ? `
+                    <div class="event-detail-card">
+                        <h4><span class="material-symbols-outlined">info</span>What You'll Learn</h4>
+                        <ul>
+                            ${event.details.map(detail => `<li>${detail}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : `
+                    <div class="event-detail-card">
+                        <h4><span class="material-symbols-outlined">info</span>What You'll Learn</h4>
+                        <ul>
+                            <li>Interactive ${config.label} session</li>
+                            <li>Hands-on learning experience</li>
+                            <li>Q&A with the speaker</li>
+                            <li>Networking opportunities</li>
+                        </ul>
+                    </div>
+                `}
+                
+                <div class="event-detail-card">
+                    <h4><span class="material-symbols-outlined">checklist</span>Requirements</h4>
+                    <p>No prior experience required - suitable for all levels!</p>
+                </div>
+            </div>
+            
+            <div class="event-registration-section">
+                <div class="registration-info">
+                    <h3>Registration Details</h3>
+                    <div class="registration-stats">
+                        <div class="stat">
+                            <span class="stat-number">${event.registered}</span>
+                            <span class="stat-label">Registered</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">${event.spots}</span>
+                            <span class="stat-label">Total Capacity</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">${spotsLeft}</span>
+                            <span class="stat-label">Spots Left</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="registration-action">
+                    ${upcoming ? `
+                        <button class="btn btn-primary btn-large register-btn" data-event-id="${event.id}" ${spotsLeft === 0 ? 'disabled' : ''}>
+                            <span class="material-symbols-outlined">${spotsLeft > 0 ? 'person_add' : 'schedule'}</span>
+                            ${spotsLeft > 0 ? 'Register Now' : 'Join Waitlist'}
+                        </button>
+                    ` : `
+                        <button class="btn btn-outline btn-large" disabled>
+                            <span class="material-symbols-outlined">event_busy</span>
+                            Event Completed
+                        </button>
+                    `}
+                    <p class="registration-note">
+                        ${upcoming ? 'Registration is free! You will receive a confirmation email after registering.' : 'This event has already ended.'}
+                    </p>
+                </div>
+            </div>
         </div>
     `;
-    
-    // Toggle fullscreen image mode if event has an image
-    if (event.image) {
-        modal.classList.add('image-fullscreen');
-    } else {
-        modal.classList.remove('image-fullscreen');
-    }
 
-    // Show modal with animation
     modal.classList.add('active');
-    document.body.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeEventModal() {
     const modal = document.getElementById('eventModal');
     modal.classList.remove('active');
-    modal.classList.remove('image-fullscreen');
-    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
 }
 
 function initializeModal() {
     const modal = document.getElementById('eventModal');
     const closeBtn = document.getElementById('modalClose');
-    
-    // Close button handler
+
     closeBtn.addEventListener('click', closeEventModal);
-    
-    // Click outside to close
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closeEventModal();
         }
     });
-    
-    // ESC key to close
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeEventModal();
         }
     });
-    
-    // Event delegation for card clicks
+
     document.getElementById('eventsGrid').addEventListener('click', (e) => {
         const card = e.target.closest('.event-card');
         if (card) {
-            // Don't open modal if clicking on register button
-            if (e.target.closest('.event-register')) {
-                return;
-            }
             const eventId = card.getAttribute('data-event-id');
             openEventModal(eventId);
         }

@@ -6,7 +6,7 @@ export const collabs = [
 		"darkLogo": "assets/cloud.svg",
 		"logoScale": 1.15,
 		"color": "blue",
-		"description": "Öğrenci projeleri için Google Cloud Platform kredileri ve kaynaklara erişim",
+		"description": "Access to Google Cloud Platform credits and resources for student projects",
 		"url": "https://cloud.google.com/"
 	},
 	{
@@ -15,7 +15,7 @@ export const collabs = [
 		"logo": "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
 		"darkLogo": "https://upload.wikimedia.org/wikipedia/commons/2/24/Github_logo_svg.svg",
 		"color": "red",
-		"description": "Öğrenci Geliştirici Paketi ve takım projeleri için iş birliği araçları",
+		"description": "Student Developer Pack and collaboration tools for team projects",
 		"url": "https://github.com/"
 	},
 	{
@@ -23,7 +23,7 @@ export const collabs = [
 		"name": "Firebase",
 		"logo": "assets/firebase.png",
 		"color": "yellow",
-		"description": "Mobil ve web uygulamaları için backend servisleri ve barindırma çözümleri",
+		"description": "Backend services and hosting solutions for mobile and web applications",
 		"url": "https://firebase.google.com/"
 	},
 	{
@@ -31,7 +31,7 @@ export const collabs = [
 		"name": "TensorFlow",
 		"logo": "assets/tensorflow.png",
 		"color": "green",
-		"description": "Makine öğrenimi atölyeleri ve AI/ML proje desteği",
+		"description": "Machine learning workshops and AI/ML project support",
 		"url": "https://www.tensorflow.org/"
 	}
 ];

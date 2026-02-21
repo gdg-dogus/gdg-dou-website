@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html lang="tr" data-color-scheme="light">
+<html lang="en" data-color-scheme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etkinlikler - GDG On Campus DOU</title>
+    <title>Events - GDG On Campus DOU</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages/events.css">
 </head>
+
 <body>
     <div id="header-placeholder"></div>
 
@@ -31,9 +37,10 @@
             </div>
             <div class="container">
                 <div class="events-header">
-                    <span class="hero-eyebrow">Keşfet & Bağlan</span>
-                    <h1 class="hero-title"><span class="text-gradient">Etkinliklerimiz</span></h1>
-                    <p class="hero-subtitle">Workshop'lara, teknoloji sohbetlerine, çalışma gruplarına ve daha fazlasına katılın. Toplulukla bağlantı kurun ve becerilerinizi geliştirin.</p>
+                    <span class="hero-eyebrow">Discover & Connect</span>
+                    <h1 class="hero-title">Our <span class="text-gradient">Events</span></h1>
+                    <p class="hero-subtitle">Join our workshops, tech talks, study jams and more. Connect with the
+                        community and level up your skills.</p>
                 </div>
             </div>
         </section>
@@ -42,39 +49,35 @@
         <section class="events-filters-section">
             <div class="container">
                 <div class="filters-wrapper">
-                    <div class="filter-tabs" id="categoryFilters">
-                        <button class="filter-tab active" data-category="all">
+                    <div class="filter-tags" id="categoryFilters">
+                        <button class="filter-tag active" data-category="all">
                             <span class="material-symbols-outlined">apps</span>
-                            Tüm Etkinlikler
+                            All Events
                         </button>
-                        <button class="filter-tab" data-category="summit">
+                        <button class="filter-tag" data-category="summit">
                             <span class="material-symbols-outlined">emoji_events</span>
-                            Zirve
+                            Summit
                         </button>
-                        <button class="filter-tab" data-category="tech_talk">
+                        <button class="filter-tag" data-category="tech_talk">
                             <span class="material-symbols-outlined">mic</span>
-                            Teknoloji Sohbeti
+                            Tech Talk
                         </button>
-                        <button class="filter-tab" data-category="workshop">
+                        <button class="filter-tag" data-category="workshop">
                             <span class="material-symbols-outlined">construction</span>
-                            Atölye
+                            Workshop
                         </button>
-                        <button class="filter-tab" data-category="study_jam">
+                        <button class="filter-tag" data-category="study_jam">
                             <span class="material-symbols-outlined">school</span>
-                            Çalışma Grubu
+                            Study Jam
                         </button>
-                        <button class="filter-tab" data-category="info_session">
+                        <button class="filter-tag" data-category="info_session">
                             <span class="material-symbols-outlined">info</span>
-                            Bilgilendirme
-                        </button>
-                        <button class="filter-tab" data-category="design">
-                            <span class="material-symbols-outlined">palette</span>
-                            Tasarım
+                            Info Session
                         </button>
                     </div>
                     <div class="filter-toggle">
-                        <button class="toggle-btn active" data-filter="upcoming">Yaklaşan</button>
-                        <button class="toggle-btn" data-filter="past">Geçmiş</button>
+                        <button class="toggle-btn active" data-filter="upcoming">Upcoming</button>
+                        <button class="toggle-btn" data-filter="past">Past</button>
                     </div>
                 </div>
             </div>
@@ -88,8 +91,8 @@
                 </div>
                 <div class="no-events-message" id="noEventsMessage" style="display: none;">
                     <span class="material-symbols-outlined">event_busy</span>
-                    <h3>Etkinlik bulunamadı</h3>
-                    <p>Filtrelerinize uygun etkinlik bulunamadı. Farklı bir kategori deneyin veya daha sonra tekrar kontrol edin.</p>
+                    <h3>No events found</h3>
+                    <p>There are no events matching your filters. Try a different category or check back later.</p>
                 </div>
             </div>
         </section>
@@ -100,11 +103,11 @@
                 <div class="cta-card">
                     <div class="cta-content">
                         <span class="material-symbols-outlined cta-icon">notifications_active</span>
-                        <h2>Hiçbir Etkinliği Kaçırma</h2>
-                        <p>Yaklaşan etkinliklerden haberdar olmak ve ilk kaydolan siz olmak için topluluğumuza katılın.</p>
+                        <h2>Never Miss an Event</h2>
+                        <p>Join our community to get notified about upcoming events and be the first to register.</p>
                         <a href="#" class="btn btn-primary">
                             <span class="material-symbols-outlined">group_add</span>
-                            GDG'ye Katıl
+                            Join Community
                         </a>
                     </div>
                 </div>
@@ -114,12 +117,12 @@
 
     <!-- Event Detail Modal -->
     <div class="event-modal-overlay" id="eventModal">
-        <div class="event-modal">
-            <button class="modal-close" id="modalClose">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-            <div class="modal-content" id="modalContent">
-                <!-- Modal content will be dynamically inserted -->
+        <div class="event-modal-container" id="eventModalContainer">
+            <div class="event-modal-content">
+                <button class="modal-close" id="modalClose" aria-label="Close event modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div id="eventModalBody"></div>
             </div>
         </div>
     </div>
@@ -129,4 +132,5 @@
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/renderers/eventsRenderer.js"></script>
 </body>
+
 </html>

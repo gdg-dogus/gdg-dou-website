@@ -1,27 +1,101 @@
 <!DOCTYPE html>
-<html lang="tr" data-color-scheme="light">
+<html lang="en" data-color-scheme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GDG On Campus DOU</title>
 
+    <!-- Preconnect for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages/home.css">
 </head>
+
 <body>
     <div id="header-placeholder"></div>
 
     <main id="mainContent">
         <section class="hero home-hero">
             <div class="hero-background">
+                <div class="hero-waves" aria-hidden="true">
+                    <svg class="hero-wave-svg hero-wave-svg--light" viewBox="0 0 1440 900"
+                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" focusable="false">
+                        <defs>
+                            <linearGradient id="heroGradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#C8DDF9;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#E8F0FE;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="heroGradRed" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#F4C7C3;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#FAD2CF;stop-opacity:0.8" />
+                            </linearGradient>
+                            <linearGradient id="heroGradYellow" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FAECC5;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#FFF7E0;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="heroGradGreen" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#CDE9D6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#E6F4EA;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="1440" height="900" fill="#ffffff" />
+                        <path d="M600 0 C 900 200, 1100 400, 1440 300 V 0 Z" fill="url(#heroGradYellow)"
+                            opacity="0.8" />
+                        <path d="M0 0 C 300 50, 450 400, 900 250 C 1100 180, 1300 200, 1440 150 V 0 H 0 Z"
+                            fill="url(#heroGradBlue)" opacity="0.9" />
+                        <path d="M0 300 C 300 200, 500 500, 800 450 C 1000 420, 1100 500, 1200 600 L 0 900 Z"
+                            fill="url(#heroGradRed)" opacity="0.8" />
+                        <path d="M800 900 C 1000 600, 1200 400, 1440 600 V 900 H 800 Z" fill="url(#heroGradGreen)"
+                            opacity="0.8" />
+                        <rect width="1440" height="900" fill="url(#heroGradBlue)" opacity="0.05"
+                            style="mix-blend-mode: overlay;" />
+                    </svg>
+
+                    <svg class="hero-wave-svg hero-wave-svg--dark" viewBox="0 0 1440 900"
+                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" focusable="false">
+                        <defs>
+                            <linearGradient id="heroGradBlueDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4285F4;stop-opacity:0.28" />
+                                <stop offset="100%" style="stop-color:#4285F4;stop-opacity:0.08" />
+                            </linearGradient>
+                            <linearGradient id="heroGradRedDark" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#EA4335;stop-opacity:0.22" />
+                                <stop offset="100%" style="stop-color:#EA4335;stop-opacity:0.08" />
+                            </linearGradient>
+                            <linearGradient id="heroGradYellowDark" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FBBC04;stop-opacity:0.22" />
+                                <stop offset="100%" style="stop-color:#FBBC04;stop-opacity:0.08" />
+                            </linearGradient>
+                            <linearGradient id="heroGradGreenDark" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#34A853;stop-opacity:0.22" />
+                                <stop offset="100%" style="stop-color:#34A853;stop-opacity:0.08" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="1440" height="900" fill="#0a0f1a" />
+                        <path d="M600 0 C 900 200, 1100 400, 1440 300 V 0 Z" fill="url(#heroGradYellowDark)"
+                            opacity="0.9" />
+                        <path d="M0 0 C 300 50, 450 400, 900 250 C 1100 180, 1300 200, 1440 150 V 0 H 0 Z"
+                            fill="url(#heroGradBlueDark)" opacity="0.95" />
+                        <path d="M0 300 C 300 200, 500 500, 800 450 C 1000 420, 1100 500, 1200 600 L 0 900 Z"
+                            fill="url(#heroGradRedDark)" opacity="0.85" />
+                        <path d="M800 900 C 1000 600, 1200 400, 1440 600 V 900 H 800 Z" fill="url(#heroGradGreenDark)"
+                            opacity="0.9" />
+                        <rect width="1440" height="900" fill="url(#heroGradBlueDark)" opacity="0.08"
+                            style="mix-blend-mode: overlay;" />
+                    </svg>
+                </div>
                 <div class="hero-orb orb-1"></div>
                 <div class="hero-orb orb-2"></div>
                 <div class="hero-orb orb-3"></div>
@@ -33,16 +107,17 @@
                     <div class="hero-logos">
                         <img src="assets/logo.png" alt="GDG On Campus DOU Logo" class="hero-logo">
                     </div>
-                    <h1 class="hero-title"><span class="text-gradient">Google Developer Groups</span><br>On Campus DOU</h1>
-                    <p class="hero-subtitle">Geliştiriciler, tasarımcılar ve teknoloji tutkunlarından oluşan canlı topluluğumuza katılın. Google teknolojileriyle birlikte öğrenin, geliştirin ve yenilik yapın.</p>
+                    <h1 class="hero-title"><span class="text-gradient">Google Developer Groups</span><br>On Campus</h1>
+                    <p class="hero-subtitle">Join our vibrant community of developers, designers, and tech enthusiasts.
+                        Learn, build, and innovate together with Google technologies.</p>
                     <div class="hero-buttons">
                         <a href="#" class="btn btn-primary">
                             <span class="material-symbols-outlined">group_add</span>
-                            GDG'ye Katıl
+                            Join the Community
                         </a>
                         <a href="events.html" class="btn btn-secondary">
                             <span class="material-symbols-outlined">event</span>
-                            Yaklaşan Etkinlikler
+                            Upcoming Events
                         </a>
                     </div>
                 </div>
@@ -52,10 +127,128 @@
         <section class="statistics">
             <div class="container">
                 <div class="section-header">
-                    <span class="hero-eyebrow">Etkimiz</span>
-                    <h2 class="section-title">Topluluk <span class="text-gradient">İstatistikleri</span></h2>
+                    <span class="hero-eyebrow">Our Impact</span>
+                    <h2 class="section-title">Community <span class="text-gradient">Statistics</span></h2>
                 </div>
                 <div class="stats-grid">
+                </div>
+            </div>
+        </section>
+
+        <!-- Biz Kimiz? -->
+        <section class="section section-what-we-do" id="who-we-are">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Biz Kimiz?</h2>
+                    <p class="section-subtitle">GDG On Campus DOU; teknolojiye meraklı öğrencilerin bir araya gelip
+                        öğrendiği, paylaştığı ve birlikte ürettiği bir topluluktur.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-symbols-outlined">workshop</span>
+                        </div>
+                        <h3>Öğrenme & Paylaşım</h3>
+                        <p>Workshoplar, söyleşiler ve sunumlarla birlikte öğrenir; deneyimlerimizi paylaşarak
+                            birbirimize ilham veririz.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-symbols-outlined">record_voice_over</span>
+                        </div>
+                        <h3>Etkinlikler & Konuklar</h3>
+                        <p>Konuşmalar ve networking etkinlikleriyle sektör profesyonelleriyle bir araya gelir, kariyer
+                            yolculuğumuzu güçlendiririz.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
+                        <h3>Üretim Odaklı Takımlar</h3>
+                        <p>Web, mobil ve oyun ekiplerimizle dönem boyunca projeler geliştirir; Workshoplar ve demo’larla
+                            üretim becerilerimizi geliştiririz.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events -->
+        <section class="section section-alt section-events-preview" id="events-preview">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Gelecek Etkinlikler</h2>
+                    <p class="section-subtitle">Heyecan verici gelecek etkinliklerimizi kaçırmayın</p>
+                </div>
+                <div class="events-meta">
+                    <div class="event-countdown" id="eventCountdown"></div>
+                    <a href="events.html" class="btn btn-outline btn-small">
+                        Tüm etkinliklerimizi görüntüle
+                        <span class="material-symbols-outlined">calendar_month</span>
+                    </a>
+                </div>
+                <div id="homeEventsList" class="home-events-list">
+                    <!-- Events populated by JavaScript -->
+                </div>
+                <div class="section-cta">
+                    <a href="events.html" class="btn btn-outline">Tüm Etkinliklere Göz At</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Blogs-->
+        <section class="section section-blog" id="blog-preview">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">En Yeni Bloglarımız</h2>
+                    <p class="section-subtitle">Topluluğumuzdan gelen haberler, eğitimler ve güncellemeler</p>
+                </div>
+                <div id="homeBlogList" class="blog-grid">
+                    <!-- populated by JavaScript -->
+                </div>
+                <div class="section-cta">
+                    <a href="blog.html" class="btn btn-outline">Tüm Bloglara Göz At</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus tracks -->
+        <section class="section section-focus" id="focus-tracks">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">İlgili Olduğunuz Takımı Seçin</h2>
+                    <p class="section-subtitle">Çekirdek ekiplerimiz, dönem boyunca gerçek projeler üzerinde birlikte
+                        çalışır. İlgi alanını seç, ekibe katıl ve birlikte üret.</p>
+                </div>
+                <div class="tracks-grid" id="tracksGrid">
+                </div>
+                <p class="section-footnote">Üretim odaklı, ekip çalışmasına dayalı ve sürdürülebilir proje geliştirme
+                    deneyimi.</p>
+            </div>
+        </section>
+
+        <!-- Newsletter CTA -->
+        <section class="section section-newsletter section-alt" id="newsletter">
+            <div class="container">
+                <div class="newsletter-card">
+                    <div class="newsletter-content">
+                        <h2>Bizden Haberdar Olun</h2>
+                        <p>Etkinlikler, kaynaklar ve özel fırsatlarla ilgili haftalık bir bülten alın.</p>
+                        <form class="newsletter-form" id="newsletterForm">
+                            <label class="sr-only" for="newsletterEmail">Email address</label>
+                            <input type="email" id="newsletterEmail" name="newsletterEmail"
+                                placeholder="you@example.com" required>
+                            <button type="submit" class="btn btn-primary btn-small">
+                                Abone Ol
+                                <span class="material-symbols-outlined">mail</span>
+                            </button>
+                        </form>
+                        <small class="newsletter-meta">Asla spam yok—sadece GDG on Campus DOU'da olan
+                            gelişmeler.</small>
+                    </div>
+                    <div class="newsletter-illustration">
+                        <span class="material-symbols-outlined">wifi_tethering</span>
+                        <p>Canlı yayınlanan atölyeler • Erken etkinlik erişimi • Etkinlik saatleri</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -63,8 +256,8 @@
         <section class="collaborations">
             <div class="container">
                 <div class="section-header">
-                    <span class="hero-eyebrow">Partnerler</span>
-                    <h2 class="section-title"><span class="text-gradient">İş Birliklerimiz</span></h2>
+                    <span class="hero-eyebrow">Partners</span>
+                    <h2 class="section-title">Our <span class="text-gradient">Collaborations</span></h2>
                 </div>
                 <div class="collab-grid">
                 </div>
@@ -72,9 +265,25 @@
         </section>
     </main>
 
+    <!-- Floating CTA -->
+    <aside class="floating-cta" id="floatingCta">
+        <div class="floating-cta__content">
+            <span class="material-symbols-outlined">rocket_launch</span>
+            <div>
+                <p class="floating-cta__eyebrow">Bizimle inşa etmeye hazır mısın?</p>
+                <p class="floating-cta__headline">GDG DOU Ailesinin bir parçası ol</p>
+            </div>
+        </div>
+        <a href="#" class="btn btn-primary btn-small">
+            Şimdi Katılın
+            <span class="material-symbols-outlined">east</span>
+        </a>
+    </aside>
+
     <div id="footer-placeholder"></div>
 
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/renderers/homeRenderer.js"></script>
 </body>
+
 </html>
