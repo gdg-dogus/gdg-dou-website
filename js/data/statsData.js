@@ -15,7 +15,7 @@ export const stats = [
 	},
 	{
 		"id": 3,
-		"number": 100,
+		"number": 250,
 		"label": "Projects Built",
 		"color": "yellow",
 		"suffix": "+"

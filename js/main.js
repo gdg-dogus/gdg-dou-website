@@ -9,10 +9,14 @@ const loadComponent = async (selector, path) => {
         if (!response.ok) throw new Error(`Failed to load ${path}`);
 
         const html = await response.text();
-        const template = document.createElement("template");
-        template.innerHTML = html.trim();
-
-        const fragment = template.content.cloneNode(true);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const fragment = document.createDocumentFragment();
+        
+        while (doc.body.firstChild) {
+            fragment.appendChild(doc.body.firstChild);
+        }
+        
         placeholder.replaceWith(fragment);
     } catch (error) {
         console.error(error);

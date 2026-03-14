@@ -40,7 +40,6 @@ export const teams = {
             "Topluluğun mobil projelerini geliştirir; Flutter / Android gibi teknolojilerle atölyeler ve projeler yürütür.",
         captain: "Batuhan Yavuz",
         members: [
-            "Batuhan Yavuz"
         ]
     },
 
@@ -176,7 +175,7 @@ export const teamMembers = [
     // --- Mobile Development ---
 
     {
-        name: "Batuhan Yavuz",
+        name: "Ayşe Nur Kendirci",
         role: "Mobile Development Team Lead",
         teamKey: "mobile",
         image: "assets/logo.png",

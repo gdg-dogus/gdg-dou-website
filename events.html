@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" data-color-scheme="light">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +20,6 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages/events.css">
 </head>
-
 <body>
     <div id="header-placeholder"></div>
 
@@ -37,10 +35,9 @@
             </div>
             <div class="container">
                 <div class="events-header">
-                    <span class="hero-eyebrow">Discover & Connect</span>
-                    <h1 class="hero-title">Our <span class="text-gradient">Events</span></h1>
-                    <p class="hero-subtitle">Join our workshops, tech talks, study jams and more. Connect with the
-                        community and level up your skills.</p>
+                    <span class="hero-eyebrow">Keşfet & Bağlan</span>
+                    <h1 class="hero-title"><span class="text-gradient">Etkinliklerimiz</span></h1>
+                    <p class="hero-subtitle">Atölye çalışmalarımıza, teknoloji konuşmalarımıza, çalışma gruplarımıza ve daha fazlasına katılın. Toplulukla bağlantı kurun ve becerilerinizi geliştirin.</p>
                 </div>
             </div>
         </section>
@@ -52,32 +49,32 @@
                     <div class="filter-tags" id="categoryFilters">
                         <button class="filter-tag active" data-category="all">
                             <span class="material-symbols-outlined">apps</span>
-                            All Events
+                            Tüm Etkinlikler
                         </button>
                         <button class="filter-tag" data-category="summit">
                             <span class="material-symbols-outlined">emoji_events</span>
-                            Summit
-                        </button>
-                        <button class="filter-tag" data-category="tech_talk">
-                            <span class="material-symbols-outlined">mic</span>
-                            Tech Talk
+                            Zirve
                         </button>
                         <button class="filter-tag" data-category="workshop">
                             <span class="material-symbols-outlined">construction</span>
-                            Workshop
+                            Atölye
                         </button>
-                        <button class="filter-tag" data-category="study_jam">
-                            <span class="material-symbols-outlined">school</span>
-                            Study Jam
+                        <button class="filter-tag" data-category="trip">
+                            <span class="material-symbols-outlined">trip</span>
+                            Gezi
+                        </button>
+                        <button class="filter-tag" data-category="tech_talk">
+                            <span class="material-symbols-outlined">mic</span>
+                            Teknoloji Konuşması
                         </button>
                         <button class="filter-tag" data-category="info_session">
                             <span class="material-symbols-outlined">info</span>
-                            Info Session
+                            Bilgilendirme Oturumu
                         </button>
                     </div>
                     <div class="filter-toggle">
-                        <button class="toggle-btn active" data-filter="upcoming">Upcoming</button>
-                        <button class="toggle-btn" data-filter="past">Past</button>
+                        <button class="toggle-btn active" data-filter="upcoming">Yaklaşan</button>
+                        <button class="toggle-btn" data-filter="past">Geçmiş</button>
                     </div>
                 </div>
             </div>
@@ -91,8 +88,8 @@
                 </div>
                 <div class="no-events-message" id="noEventsMessage" style="display: none;">
                     <span class="material-symbols-outlined">event_busy</span>
-                    <h3>No events found</h3>
-                    <p>There are no events matching your filters. Try a different category or check back later.</p>
+                    <h3>Etkinlik bulunamadı</h3>
+                    <p>Filtrelerinize uygun etkinlik bulunmuyor. Farklı bir kategori deneyin veya daha sonra tekrar kontrol edin.</p>
                 </div>
             </div>
         </section>
@@ -103,11 +100,11 @@
                 <div class="cta-card">
                     <div class="cta-content">
                         <span class="material-symbols-outlined cta-icon">notifications_active</span>
-                        <h2>Never Miss an Event</h2>
-                        <p>Join our community to get notified about upcoming events and be the first to register.</p>
+                        <h2>Hiçbir Etkinliği Kaçırma</h2>
+                        <p>Yaklaşan etkinliklerden haberdar olmak ve ilk kaydolan olmak için topluluğumuza katılın.</p>
                         <a href="#" class="btn btn-primary">
                             <span class="material-symbols-outlined">group_add</span>
-                            Join Community
+                            Topluluğa Katıl
                         </a>
                     </div>
                 </div>
@@ -132,5 +129,4 @@
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/renderers/eventsRenderer.js"></script>
 </body>
-
 </html>
