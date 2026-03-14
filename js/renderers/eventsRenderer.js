@@ -361,11 +361,17 @@ function openEventModal(eventId) {
         </div>
         
         <div class="event-modal-body">
-            <div class="event-image-placeholder">
-                <span class="material-symbols-outlined">image</span>
-                <p>Geçici Etkinlik Resmi</p>
-                <small>Etkinlik tanıtım resmi burada gösterilecek</small>
-            </div>
+            ${event.image ? `
+                <div class="event-image-placeholder">
+                    <img src="${event.image}" alt="${event.title}">
+                </div>
+            ` : `
+                <div class="event-image-placeholder">
+                    <span class="material-symbols-outlined">image</span>
+                    <p>Geçici Etkinlik Resmi</p>
+                    <small>Etkinlik tanıtım resmi burada gösterilecek</small>
+                </div>
+            `}
             
             <div class="event-description">
                 <h3>Etkinlik Açıklaması</h3>
