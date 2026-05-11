@@ -52,6 +52,16 @@
     color: var(--color-btn-primary-text);
 }
 
+[data-color-scheme="dark"] .btn-primary {
+    background: #5395ff;
+    box-shadow: 0 4px 10px rgba(83, 149, 255, 0.18);
+}
+
+[data-color-scheme="dark"] .btn-primary:hover {
+    background: #6aa5ff;
+    box-shadow: 0 7px 14px rgba(83, 149, 255, 0.22);
+}
+
 .btn-outline {
     background: transparent;
     color: var(--color-primary);

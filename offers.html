@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-color-scheme="light">
+<html lang="tr" data-color-scheme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Offers - GDG on Campus DOU</title>
-    <meta name="description" content="Curated perks and free tools for students.">
+    <title data-i18n="meta.offersTitle">Student Offers - GDG on Campus DOU</title>
+    <meta name="description" content="Curated perks and free tools for students." data-i18n-content="meta.offersDescription">
     
     <!-- Preconnect for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,23 +33,23 @@
             </div>
             <div class="container">
                 <div class="offers-header">
-                    <span class="hero-eyebrow">Öğrencilere Özel Teklifler</span>
-                    <h1 class="hero-title"><span class="text-gradient">Öğrenci Olmanın</span> Faydalarını Keşfedin</h1>
-                    <p class="hero-subtitle">Öğrenci olarak ücretsiz edinebileceğiniz tekliflerden yararlanmanız için, size sunulan en iyi ücretsiz araç, yazılım ve kaynakları derlediğimiz bir koleksiyon.</p>
+                    <span class="hero-eyebrow" data-i18n="offersPage.eyebrow">Öğrencilere Özel Teklifler</span>
+                    <h1 class="hero-title" data-i18n-html="offersPage.titleHtml"><span class="text-gradient">Öğrenci Olmanın</span> Faydalarını Keşfedin</h1>
+                    <p class="hero-subtitle" data-i18n="offersPage.subtitle">Öğrenci olarak ücretsiz edinebileceğiniz tekliflerden yararlanmanız için, size sunulan en iyi ücretsiz araç, yazılım ve kaynakları derlediğimiz bir koleksiyon.</p>
                 </div>
 
                 <div class="offers-controls">
                     <div class="search-bar">
                         <span class="material-symbols-outlined">search</span>
-                        <input type="text" id="offerSearch" placeholder="Teklifleri Arayın...">
+                        <input type="text" id="offerSearch" placeholder="Teklifleri Arayın..." data-i18n-placeholder="offersPage.searchPlaceholder">
                     </div>
                     <div class="filter-tags" id="categoryFilters">
-                        <button class="filter-tag active" data-category="all">Tümü</button>
-                        <button class="filter-tag" data-category="Dev Tools">Geliştirici Araçları</button>
-                        <button class="filter-tag" data-category="Productivity">Verimlilik</button>
-                        <button class="filter-tag" data-category="Design">Tasarım</button>
-                        <button class="filter-tag" data-category="Cloud">Bulut</button>
-                         <button class="filter-tag" data-category="Lifestyle">Yaşam Tarzı</button>
+                        <button class="filter-tag active" data-category="all" data-i18n="offersPage.filters.all">Tümü</button>
+                        <button class="filter-tag" data-category="developer_tools" data-i18n="offersPage.filters.developerTools">Geliştirici Araçları</button>
+                        <button class="filter-tag" data-category="productivity" data-i18n="offersPage.filters.productivity">Verimlilik</button>
+                        <button class="filter-tag" data-category="design" data-i18n="offersPage.filters.design">Tasarım</button>
+                        <button class="filter-tag" data-category="cloud" data-i18n="offersPage.filters.cloud">Bulut</button>
+                         <button class="filter-tag" data-category="lifestyle" data-i18n="offersPage.filters.lifestyle">Yaşam Tarzı</button>
                     </div>
                 </div>
 
@@ -62,25 +62,25 @@
     <div class="offer-modal-overlay" id="offerModalOverlay">
         <div class="offer-modal-container" id="offerModalContainer">
             <div class="offer-modal-content">
-                <button class="modal-close" id="offerModalClose" aria-label="Close modal">
+                <button class="modal-close" id="offerModalClose" aria-label="Close modal" data-i18n-aria-label="common.actions.closeModal">
                     <span class="material-symbols-outlined">close</span>
                 </button>
                 
                 <div class="offer-modal-header">
                     <div class="offer-modal-logo-wrapper">
-                        <img src="" alt="Brand Logo" id="modalLogo" class="offer-modal-logo">
+                        <img src="" alt="Brand Logo" id="modalLogo" class="offer-modal-logo" data-i18n-alt="offersPage.modalLogoAlt">
                     </div>
                     <div class="offer-modal-title-group">
-                        <h2 id="modalTitle">Offer Title</h2>
-                        <span class="offer-category-badge" id="modalCategory">Category</span>
+                        <h2 id="modalTitle" data-i18n="offersPage.modalTitle">Offer Title</h2>
+                        <span class="offer-category-badge" id="modalCategory" data-i18n="offersPage.modalCategory">Category</span>
                     </div>
                 </div>
 
                 <div class="offer-modal-body">
-                    <p id="modalDescription" class="offer-full-description">Description goes here...</p>
+                    <p id="modalDescription" class="offer-full-description" data-i18n="offersPage.modalDescription">Description goes here...</p>
                     
                     <div class="offer-claim-section">
-                        <h3><span class="material-symbols-outlined">how_to_reg</span> Tekliften Nasıl Yararlanabilirim?</h3>
+                        <h3><span class="material-symbols-outlined">how_to_reg</span> <span data-i18n="offersPage.howToClaim">Tekliften Nasıl Yararlanabilirim?</span></h3>
                         <ol class="claim-steps" id="modalClaimSteps">
                         </ol>
                     </div>
@@ -88,7 +88,7 @@
 
                 <div class="offer-modal-footer">
                     <a href="#" target="_blank" id="modalLink" class="btn btn-primary btn-full-width">
-                        Bu Tekliften Yararlanın
+                        <span data-i18n="offersPage.claimButton">Bu Tekliften Yararlanın</span>
                         <span class="material-symbols-outlined">open_in_new</span>
                     </a>
                 </div>

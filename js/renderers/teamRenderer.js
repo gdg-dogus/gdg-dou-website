@@ -1,5 +1,9 @@
 import { teams, teamMembers } from "../data/teamData.js";
 import { observeVisibility, initOrbVisibilityControl, initPageVisibilityControl } from "../utils/observer.js";
+import { getLocalizedItem, t } from "../translations.js";
+
+let activeTeamKey = null;
+let previousBodyOverflow = "";
 
 const SOCIAL_ICONS = {
     linkedin: `
@@ -11,14 +15,14 @@ const SOCIAL_ICONS = {
     `,
     instagram: `
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" />
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="1.6" />
             <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" />
         </svg>
     `,
-    github: `
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.59V22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    gmail: `
+        <svg viewBox="52 42 88 66" aria-hidden="true" focusable="false">
+            <path fill="#4285f4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34a853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#fbbc04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#ea4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#c5221f" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/>
         </svg>
     `,
     default: `
@@ -32,7 +36,8 @@ const getTeamByKey = (teamKey) => {
     const entry = Object.entries(teams).find(([, team]) => team.key === teamKey);
     if (!entry) return { label: "", team: null };
     const [label, team] = entry;
-    return { label, team };
+    const localizedTeam = getLocalizedItem(team);
+    return { label: localizedTeam.label || label, team: localizedTeam };
 };
 
 const getMembersForTeam = (teamKey) => teamMembers.filter((member) => member.teamKey === teamKey);
@@ -54,7 +59,7 @@ const renderSocialLinks = (member) => {
                     data-network="${network}"
                     href="${safeUrl}"
                     ${attributes}
-                    aria-label="${member.name} ${network} profili"
+                    aria-label="${t('teamsPage.socialProfile', { name: member.name, network })}"
                 >
                     ${icon}
                 </a>
@@ -63,7 +68,7 @@ const renderSocialLinks = (member) => {
         .join("");
 
     if (!links) return "";
-    return `<div class="team-socials" aria-label="${member.name} sosyal bağlantıları">${links}</div>`;
+    return `<div class="team-socials" aria-label="${t('teamsPage.socialLinks', { name: member.name })}">${links}</div>`;
 };
 
 const openTeamModal = (teamKey) => {
@@ -73,26 +78,29 @@ const openTeamModal = (teamKey) => {
 
     const { label: teamLabel, team } = getTeamByKey(teamKey);
     if (!team) return;
+    activeTeamKey = teamKey;
 
     const coreMembers = getMembersForTeam(teamKey);
     const extraNames = (team.members || []).filter(
         (name) => !coreMembers.some((member) => member.name === name)
     );
 
+    const wasActive = modal.classList.contains("active");
+
     modalContent.innerHTML = `
         <div class="team-modal-shell">
             <header class="team-modal-header">
                 <div class="team-modal-title-row">
                     <h2 class="team-modal-title">${teamLabel}</h2>
-                    <span class="offer-category-badge">${team.captain || "Team Lead"}</span>
+                    <span class="offer-category-badge">${team.captain || t('teamsPage.captainFallback')}</span>
                 </div>
-                <p class="team-modal-subtitle">Takım Üyeleri ve Sorumlulukları</p>
+                <p class="team-modal-subtitle">${t('teamsPage.modalSubtitle')}</p>
             </header>
 
             <section class="team-modal-about">
                 <h3 class="team-modal-about-title">
                     <span class="material-symbols-outlined">info</span>
-                    Takım Hakkında
+                    ${t('teamsPage.aboutTitle')}
                 </h3>
                 <p class="team-modal-about-text">
                     ${team.description}
@@ -102,6 +110,7 @@ const openTeamModal = (teamKey) => {
             <section class="team-modal-members">
                 ${coreMembers
                     .map((member) => {
+                        const localizedMember = getLocalizedItem(member);
                         const initials = member.name
                             .split(" ")
                             .map((part) => part[0])
@@ -119,7 +128,7 @@ const openTeamModal = (teamKey) => {
                                 </div>
                             </div>
                             <h4 class="team-modal-member-name">${member.name}</h4>
-                            <p class="team-modal-member-role">${member.role}</p>
+                            <p class="team-modal-member-role">${localizedMember.role}</p>
                         </article>
                     `;
                     })
@@ -144,7 +153,7 @@ const openTeamModal = (teamKey) => {
                                 </div>
                             </div>
                             <h4 class="team-modal-member-name">${name}</h4>
-                            <p class="team-modal-member-role">Team Member</p>
+                            <p class="team-modal-member-role">${teamLabel || t('teamsPage.memberRole')}</p>
                         </article>
                     `;
                     })
@@ -155,13 +164,26 @@ const openTeamModal = (teamKey) => {
 
     modal.setAttribute("aria-hidden", "false");
     modal.classList.add("active");
+
+    if (!wasActive) {
+        previousBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+    }
 };
 
 const closeTeamModal = () => {
     const modal = document.getElementById("teamModal");
     if (!modal) return;
+    const wasActive = modal.classList.contains("active");
     modal.setAttribute("aria-hidden", "true");
     modal.classList.remove("active");
+
+    if (wasActive) {
+        document.body.style.overflow = previousBodyOverflow;
+        previousBodyOverflow = "";
+    }
+
+    activeTeamKey = null;
 };
 
 const renderCoreTeam = (members) => {
@@ -171,14 +193,15 @@ const renderCoreTeam = (members) => {
     teamGrid.innerHTML = "";
 
     const displayMembers = members.filter(
-        (member) => /lead/i.test(member.role) || /organizer/i.test(member.role)
+        (member) => /takım kaptanı/i.test(member.role) || /organizatör/i.test(member.role) || /asistan/i.test(member.role)
     );
 
     displayMembers.forEach((member, index) => {
+        const localizedMember = getLocalizedItem(member);
         const teamCard = document.createElement("article");
         teamCard.className = "team-card";
 
-        teamCard.setAttribute("data-role", member.role);
+        teamCard.setAttribute("data-role", localizedMember.role);
         teamCard.dataset.delay = index;
 
         const socialLinks = renderSocialLinks(member);
@@ -187,8 +210,8 @@ const renderCoreTeam = (members) => {
             <img src="${member.image}" alt="${member.name}" class="team-logo" loading="lazy" decoding="async">
             <div class="team-content">
                 <h3 class="team-title">${member.name}</h3>
-                <p class="team-role-tag">${member.role}</p>
-                <p class="team-desc">${member.bio}</p>
+                <p class="team-role-tag">${localizedMember.role}</p>
+                <p class="team-desc">${localizedMember.bio}</p>
                 ${socialLinks}
             </div>
         `;
@@ -242,6 +265,13 @@ const initTeamPage = () => {
     // Initialize orb visibility control for performance
     initOrbVisibilityControl();
     initPageVisibilityControl();
+
+    document.addEventListener("languagechange", () => {
+        renderCoreTeam(teamMembers);
+        if (activeTeamKey && modal?.classList.contains("active")) {
+            openTeamModal(activeTeamKey);
+        }
+    });
 };
 
 document.addEventListener("DOMContentLoaded", initTeamPage);

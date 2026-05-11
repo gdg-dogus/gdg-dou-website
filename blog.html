@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-color-scheme="light">
+<html lang="tr" data-color-scheme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - GDG on Campus DOU</title>
-    <meta name="description" content="Teknoloji, yazılım geliştirme ve Google teknolojileri hakkında blog yazıları.">
+    <title data-i18n="meta.blogTitle">Blog - GDG on Campus DOU</title>
+    <meta name="description" content="Teknoloji, yazılım geliştirme ve Google teknolojileri hakkında blog yazıları." data-i18n-content="meta.blogDescription">
     
     <!-- Preconnect for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/pages/offers.css">
     <link rel="stylesheet" href="css/pages/blog.css">
+    <link rel="stylesheet" href="css/pages/blog-medium.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -35,11 +36,11 @@
             </div>
             <div class="container">
                 <div class="blog-header">
-                    <span class="hero-eyebrow">GDG DOU Blog</span>
-                    <h1 class="hero-title">
+                    <span class="hero-eyebrow" data-i18n="blogPage.eyebrow">GDG on Campus DOU Blog</span>
+                    <h1 class="hero-title" data-i18n-html="blogPage.titleHtml">
                         <span class="text-gradient">Teknoloji Dünyasından</span> Haberler ve Rehberler
                     </h1>
-                    <p class="hero-subtitle">
+                    <p class="hero-subtitle" data-i18n="blogPage.subtitle">
                         Google teknolojileri, yazılım geliştirme, yapay zeka ve daha fazlası hakkında öğrenci topluluğumuz tarafından hazırlanan içerikler.
                     </p>
                 </div>
@@ -47,19 +48,39 @@
                 <div class="blog-controls">
                     <div class="search-bar">
                         <span class="material-symbols-outlined">search</span>
-                        <input type="text" id="blogSearch" placeholder="Blog yazılarında ara...">
+                        <input type="text" id="blogSearch" placeholder="Blog yazılarında ara..." data-i18n-placeholder="blogPage.searchPlaceholder">
+                    </div>
+                    <div class="source-filters" id="sourceFilters">
+                        <button class="source-tag active" data-source="all">
+                            <span class="material-symbols-outlined">apps</span> <span data-i18n="blogPage.filters.all">Tümü</span>
+                        </button>
+                        <button class="source-tag" data-source="medium">
+                            <span class="material-symbols-outlined">rss_feed</span> <span data-i18n="blogPage.filters.medium">Medium</span>
+                        </button>
+                        <button class="source-tag" data-source="local">
+                            <span class="material-symbols-outlined">edit_note</span> <span data-i18n="blogPage.filters.local">Blog</span>
+                        </button>
                     </div>
                     <div class="filter-tags" id="categoryFilters">
-                        <button class="filter-tag active" data-category="all">Tümü</button>
-                        <button class="filter-tag" data-category="Etkinlikler">Etkinlikler</button>
-                        <button class="filter-tag" data-category="Geliştirme">Geliştirme</button>
-                        <button class="filter-tag" data-category="Yapay Zeka">Yapay Zeka</button>
-                        <button class="filter-tag" data-category="Web">Web</button>
-                        <button class="filter-tag" data-category="Cloud">Cloud</button>
+                        <button class="filter-tag active" data-category="all" data-i18n="blogPage.filters.all">Tümü</button>
+                        <button class="filter-tag" data-category="events" data-i18n="blogPage.filters.events">Etkinlikler</button>
+                        <button class="filter-tag" data-category="development" data-i18n="blogPage.filters.development">Geliştirme</button>
+                        <button class="filter-tag" data-category="ai" data-i18n="blogPage.filters.ai">Yapay Zeka</button>
+                        <button class="filter-tag" data-category="web" data-i18n="blogPage.filters.web">Web</button>
+                        <button class="filter-tag" data-category="cloud" data-i18n="blogPage.filters.cloud">Cloud</button>
                     </div>
                 </div>
 
                 <div class="blog-grid" id="blogGrid"></div>
+
+                <div class="medium-cta-section">
+                    <a href="https://medium.com/@gdscdogus" target="_blank" rel="noopener noreferrer" class="medium-cta-btn" id="mediumProfileCta">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true" focusable="false">
+                            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                        </svg>
+                        <span data-i18n="blogPage.mediumCta">Medium'da Tüm Yazıları Gör</span>
+                    </a>
+                </div>
             </div>
         </section>
     </main>
@@ -67,7 +88,7 @@
     <div class="blog-modal-overlay" id="blogModalOverlay">
         <div class="blog-modal-container" id="blogModalContainer">
             <div class="blog-modal-content">
-                <button class="modal-close" id="blogModalClose" aria-label="Close modal">
+                <button class="modal-close" id="blogModalClose" aria-label="Close modal" data-i18n-aria-label="common.actions.closeModal">
                     <span class="material-symbols-outlined">close</span>
                 </button>
                 
@@ -96,18 +117,28 @@
 
                 <div class="blog-modal-footer">
                     <div class="blog-share-section">
-                        <span class="blog-share-label">Paylaş:</span>
+                        <span class="blog-share-label" data-i18n="blogPage.share">Paylaş:</span>
                         <div class="blog-share-buttons">
-                            <button class="btn-share" id="shareTwitter" aria-label="Twitter'da paylaş">
-                                <span class="material-symbols-outlined">share</span>
+                            <button class="btn-share share-x" id="shareTwitter" aria-label="X'te paylaş" data-i18n-aria-label="blogPage.shareX">
+                                <svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M17.53 3h3.28l-7.16 8.18L22.08 22h-6.6l-5.17-6.76L4.4 22H1.1l7.66-8.76L.68 3h6.77l4.67 6.18L17.53 3Zm-1.15 17.1h1.82L6.46 4.8H4.51l11.87 15.3Z"/>
+                                </svg>
                             </button>
-                            <button class="btn-share" id="shareLinkedin" aria-label="LinkedIn'de paylaş">
-                                <span class="material-symbols-outlined">share</span>
+                            <button class="btn-share share-linkedin" id="shareLinkedin" aria-label="LinkedIn'de paylaş" data-i18n-aria-label="blogPage.shareLinkedin">
+                                <svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M4.98 3.5a2.48 2.48 0 1 1-.02 4.96 2.48 2.48 0 0 1 .02-4.96ZM3.1 9.35h3.75V21H3.1V9.35Zm6.02 0h3.6v1.59h.05c.5-.95 1.74-1.95 3.58-1.95 3.83 0 4.54 2.52 4.54 5.79V21h-3.75v-5.51c0-1.31-.03-3-1.83-3-1.83 0-2.11 1.43-2.11 2.91V21H9.12V9.35Z"/>
+                                </svg>
                             </button>
-                            <button class="btn-share" id="copyLink" aria-label="Linki kopyala">
+                            <button class="btn-share share-copy" id="copyLink" aria-label="Linki kopyala" data-i18n-aria-label="blogPage.copyLink">
                                 <span class="material-symbols-outlined">link</span>
                             </button>
                         </div>
+                        <a href="#" target="_blank" rel="noopener noreferrer" id="modalReadOnMedium" class="read-on-medium-btn" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                            </svg>
+                            <span data-i18n="blogPage.readOnMedium">Medium'da Oku</span>
+                        </a>
                     </div>
                 </div>
             </div>

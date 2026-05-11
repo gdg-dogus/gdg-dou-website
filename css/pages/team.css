@@ -513,13 +513,17 @@
     color: var(--social-accent);
     border: 1px solid rgba(66, 133, 244, 0.12);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: 
-        all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.3s ease;
 }
 
 .team-social-icon svg {
     width: 16px;
     height: 16px;
+}
+
+.team-social-icon[data-network="gmail"] svg {
+    width: 18px;
+    height: 14px;
 }
 
 .team-social-icon[data-network="linkedin"] {
@@ -532,16 +536,26 @@
     --social-accent-rgb: 225, 48, 108;
 }
 
-.team-social-icon[data-network="github"] {
-    --social-accent: #24292f;
-    --social-accent-rgb: 36, 41, 47;
+.team-social-icon[data-network="gmail"] {
+    --social-accent: #ea4335;
+    --social-accent-rgb: 234, 67, 53;
 }
 
-.team-social-icon:hover {
+.team-social-icon:hover,
+.team-social-icon:focus-visible {
     background: linear-gradient(135deg, rgba(var(--social-accent-rgb), 0.15), rgba(var(--social-accent-rgb), 0.08));
+    color: var(--social-accent);
     border-color: rgba(var(--social-accent-rgb), 0.35);
+    outline: none;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(var(--social-accent-rgb), 0.25);
+}
+
+.team-social-icon[data-network="linkedin"]:hover,
+.team-social-icon[data-network="linkedin"]:focus-visible {
+    color: var(--color-primary-hover);
     transform: translateY(-3px) scale(1.1);
-    box-shadow: 
+    box-shadow:
         0 8px 20px rgba(var(--social-accent-rgb), 0.25),
         0 4px 8px rgba(0, 0, 0, 0.08);
 }
@@ -551,9 +565,11 @@
     opacity: 0.4;
 }
 
-.team-social-icon[aria-disabled="true"]:hover {
+.team-social-icon[aria-disabled="true"]:hover,
+.team-social-icon[aria-disabled="true"]:focus-visible {
     transform: none;
     background: linear-gradient(135deg, rgba(66, 133, 244, 0.08), rgba(52, 168, 83, 0.05));
+    color: var(--social-accent);
     border-color: rgba(66, 133, 244, 0.12);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
@@ -564,17 +580,11 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-[data-color-scheme="dark"] .team-social-icon[data-network="github"] {
-    --social-accent: #f0f6fc;
-    --social-accent-rgb: 240, 246, 252;
-}
-
-[data-color-scheme="dark"] .team-social-icon:hover {
+[data-color-scheme="dark"] .team-social-icon:hover,
+[data-color-scheme="dark"] .team-social-icon:focus-visible {
     background: linear-gradient(135deg, rgba(var(--social-accent-rgb), 0.2), rgba(var(--social-accent-rgb), 0.1));
+    color: var(--social-accent);
     border-color: rgba(var(--social-accent-rgb), 0.4);
-    box-shadow: 
-        0 8px 20px rgba(var(--social-accent-rgb), 0.2),
-        0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes fadeInUp {
@@ -654,6 +664,7 @@
 .modal-content {
     max-height: 85vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
     scrollbar-width: none;
 }
 
@@ -1008,16 +1019,59 @@
 
 @media (max-width: 768px) {
     .hero {
-        padding: 80px 0 60px;
+        padding: 76px 0 52px;
+    }
+
+    .hero-orb {
+        filter: blur(42px);
+        opacity: 0.42;
+    }
+
+    .orb-1 {
+        width: 260px;
+        height: 260px;
+        top: -72px;
+        left: -76px;
+    }
+
+    .orb-2 {
+        width: 230px;
+        height: 230px;
+        top: 46%;
+        right: -82px;
+    }
+
+    .orb-3 {
+        width: 220px;
+        height: 220px;
+        bottom: -72px;
+        left: 8%;
+    }
+
+    .orb-4 {
+        width: 200px;
+        height: 200px;
+        top: 18%;
+        right: 18%;
+    }
+
+    .hero-grid-lines {
+        background-size: 48px 48px;
+        opacity: 0.5;
     }
     
     .team-header h2 {
         font-size: 26px;
     }
+
+    .team-subtitle {
+        font-size: 14px;
+    }
     
     .team-grid {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 16px;
+        padding-bottom: 40px;
     }
     
     .team-card {
@@ -1063,6 +1117,17 @@
 }
 
 @media (max-width: 480px) {
+    .hero {
+        padding: 58px 0 42px;
+    }
+
+    .hero-eyebrow {
+        max-width: 100%;
+        justify-content: center;
+        text-align: center;
+        white-space: normal;
+    }
+
     .team-grid {
         grid-template-columns: 1fr;
         gap: 12px;

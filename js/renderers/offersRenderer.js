@@ -1,5 +1,6 @@
 import { offersData } from '../data/offersData.js';
 import { observeVisibility, initOrbVisibilityControl, initPageVisibilityControl } from '../utils/observer.js';
+import { getLocalizedItem, t } from '../translations.js';
 
 const initOffersPage = () => {
     const offersGrid = document.getElementById('offersGrid');
@@ -18,6 +19,7 @@ const initOffersPage = () => {
     let currentCategory = 'all';
     let searchQuery = '';
     let currentModalOffer = null;
+    let previousBodyOverflow = '';
     
     // Cache filter tag elements
     let cachedFilterTags = null;
@@ -51,11 +53,14 @@ const initOffersPage = () => {
         offersGrid.innerHTML = '';
 
         const filteredOffers = offersData.filter(offer => {
-            const matchesCategory = currentCategory === 'all' || offer.category === currentCategory;
+            const localizedOffer = getLocalizedItem(offer);
+            const categoryKey = offer.categoryKey || offer.category;
+            const matchesCategory = currentCategory === 'all' || categoryKey === currentCategory;
             const matchesSearch =
                 offer.name.toLowerCase().includes(searchQuery) ||
-                offer.shortDescription.toLowerCase().includes(searchQuery) ||
-                offer.tags.some(tag => tag.toLowerCase().includes(searchQuery));
+                localizedOffer.shortDescription.toLowerCase().includes(searchQuery) ||
+                localizedOffer.fullDescription.toLowerCase().includes(searchQuery) ||
+                localizedOffer.tags.some(tag => tag.toLowerCase().includes(searchQuery));
             return matchesCategory && matchesSearch;
         });
 
@@ -63,7 +68,7 @@ const initOffersPage = () => {
             offersGrid.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: var(--color-text-secondary); animation: fadeInUp 0.5s ease;">
                     <span class="material-symbols-outlined" style="font-size: 64px; margin-bottom: 24px; opacity: 0.5;">search_off</span>
-                    <p style="font-size: 18px;">Bu kriterlere uygun teklif bulunamadı.</p>
+                    <p style="font-size: 18px;">${t('offersPage.empty')}</p>
                 </div>
             `;
             return;
@@ -72,6 +77,7 @@ const initOffersPage = () => {
         const themeForRender = getCurrentTheme();
 
         filteredOffers.forEach((offer, index) => {
+            const localizedOffer = getLocalizedItem(offer);
             const card = document.createElement('div');
             card.className = 'offer-card';
             card.dataset.delay = index;
@@ -82,12 +88,12 @@ const initOffersPage = () => {
                 <img src="${logoSrc}" alt="${offer.name}" class="offer-logo" loading="lazy" decoding="async" data-offer-id="${offer.id}">
                 <div class="offer-content">
                     <h3 class="offer-title">${offer.name}</h3>
-                    <p class="offer-desc">${offer.shortDescription}</p>
+                    <p class="offer-desc">${localizedOffer.shortDescription}</p>
                     <div class="offer-tags">
-                        ${offer.tags.map(tag => `<span class="offer-tag">${tag}</span>`).join('')}
+                        ${localizedOffer.tags.map(tag => `<span class="offer-tag">${tag}</span>`).join('')}
                     </div>
                     <button class="btn btn-outline btn-offer" type="button">
-                        Teklifi Görüntüle
+                        ${t('offersPage.viewOffer')}
                         <span class="material-symbols-outlined">arrow_forward</span>
                     </button>
                 </div>
@@ -105,27 +111,39 @@ const initOffersPage = () => {
     }
 
     function openModal(offer) {
+        const wasActive = modalOverlay.classList.contains('active');
         currentModalOffer = offer;
+        const localizedOffer = getLocalizedItem(offer);
         modalLogo.src = getLogoForTheme(offer);
         modalTitle.textContent = offer.name;
-        modalCategory.textContent = offer.category;
-        modalDescription.textContent = offer.fullDescription;
+        modalCategory.textContent = localizedOffer.category;
+        modalDescription.textContent = localizedOffer.fullDescription;
         modalLink.href = offer.link;
 
         modalClaimSteps.innerHTML = '';
-        offer.claimGuide.forEach(step => {
+        localizedOffer.claimGuide.forEach(step => {
             const li = document.createElement('li');
             li.innerHTML = step;
             modalClaimSteps.appendChild(li);
         });
 
         modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+
+        if (!wasActive) {
+            previousBodyOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     function closeModal() {
+        const wasActive = modalOverlay.classList.contains('active');
         modalOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+
+        if (wasActive) {
+            document.body.style.overflow = previousBodyOverflow;
+            previousBodyOverflow = '';
+        }
+
         currentModalOffer = null;
     }
 
@@ -135,15 +153,16 @@ const initOffersPage = () => {
     });
 
     categoryFilters.addEventListener('click', (e) => {
-        if (e.target.classList.contains('filter-tag')) {
+        const tag = e.target.closest('.filter-tag');
+        if (tag) {
             // Use cached filter tags or query once
             if (!cachedFilterTags) {
                 cachedFilterTags = categoryFilters.querySelectorAll('.filter-tag');
             }
             cachedFilterTags.forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
+            tag.classList.add('active');
 
-            currentCategory = e.target.dataset.category;
+            currentCategory = tag.dataset.category;
             renderOffers();
         }
     });
@@ -171,6 +190,13 @@ const initOffersPage = () => {
 
     document.addEventListener('themechange', (event) => {
         applyThemeToLogos(event.detail || getCurrentTheme());
+    });
+
+    document.addEventListener('languagechange', () => {
+        renderOffers();
+        if (currentModalOffer && modalOverlay.classList.contains('active')) {
+            openModal(currentModalOffer);
+        }
     });
 };
 

@@ -1,37 +1,50 @@
-import { stats } from "../data/statsData.js";
-import { collabs } from "../data/collabsData.js";
-import { events } from "../data/eventsData.js";
 import { blogData } from "../data/blogData.js";
-import { observeVisibility, observeCounter, initOrbVisibilityControl, initPageVisibilityControl } from "../utils/observer.js";
+import { loadGdgEvents } from "../utils/gdgEventsFetcher.js";
+import { observeVisibility, initOrbVisibilityControl, initPageVisibilityControl } from "../utils/observer.js";
+import { getLocale, getLocalizedItem, t } from "../translations.js";
+
+let events = [];
 
 const focusTracks = [
     {
         id: 'web-mobile',
+        titleKey: 'data.focusTracks.webMobile.title',
         title: 'Web & Mobil Geliştiriciliği',
         icon: 'devices',
+        descriptionKey: 'data.focusTracks.webMobile.description',
         description: 'Modern web ve mobil uygulama geliştirme teknolojileri ile projeler oluşturun.',
         tags: ['Flutter', 'React', 'Firebase', 'PWA'],
+        levelKey: 'data.focusTracks.webMobile.level',
         level: 'Her Seviye',
+        durationKey: 'data.focusTracks.webMobile.duration',
         duration: 'Dönem Boyu',
         teamRef: 'Web Development Team'
     },
     {
         id: 'game-dev',
+        titleKey: 'data.focusTracks.gameDev.title',
         title: 'Oyun Geliştiriciliği',
         icon: 'neurology',
+        descriptionKey: 'data.focusTracks.gameDev.description',
         description: 'Unity ve diğer oyun motorları ile yaratıcı oyun projeleri geliştirin.',
         tags: ['Unity', 'C#', 'Game Design', '3D'],
+        levelKey: 'data.focusTracks.gameDev.level',
         level: 'Her Seviye',
+        durationKey: 'data.focusTracks.gameDev.duration',
         duration: 'Dönem Boyu',
         teamRef: 'Game Development Team'
     },
     {
         id: 'design',
+        titleKey: 'data.focusTracks.design.title',
         title: 'Tasarım & Sosyal Medya',
         icon: 'palette',
+        descriptionKey: 'data.focusTracks.design.description',
         description: 'Dijital tasarım ve sosyal medya stratejileri ile topluluk etkileşimini artırın.',
         tags: ['UI/UX', 'Figma', 'Branding', 'Content'],
+        levelKey: 'data.focusTracks.design.level',
         level: 'Her Seviye',
+        durationKey: 'data.focusTracks.design.duration',
         duration: 'Dönem Boyu',
         teamRef: 'Social Media & Design Team'
     }
@@ -47,54 +60,6 @@ const getLogoForTheme = (collab, theme = getCurrentTheme()) => {
         return collab.darkLogo;
     }
     return collab.logo;
-};
-
-const renderStats = () => {
-    const statsGrid = document.querySelector('.stats-grid');
-    if (!statsGrid) return;
-
-    statsGrid.innerHTML = stats.map((stat, index) => `
-        <div class="stat-card" data-delay="${index}">
-            <div class="stat-number ${stat.color}" data-target="${stat.number}" data-suffix="${stat.suffix}">0${stat.suffix}</div>
-            <div class="stat-label">${stat.label}</div>
-        </div>
-    `).join('');
-
-    document.querySelectorAll('.stat-card').forEach(card => {
-        observeVisibility(card);
-
-        observeCounter(card, (element) => {
-            const statNumber = element.querySelector('.stat-number');
-            if (statNumber && !statNumber.classList.contains('animated')) {
-                animateValue(statNumber);
-                statNumber.classList.add('animated');
-            }
-        });
-    });
-};
-
-const animateValue = (element) => {
-    const target = parseInt(element.getAttribute('data-target'));
-    const suffix = element.getAttribute('data-suffix');
-    const duration = 2000;
-    const start = 0;
-    const startTime = performance.now();
-
-    const update = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        const ease = 1 - Math.pow(1 - progress, 4);
-
-        const current = Math.floor(start + (target - start) * ease);
-        element.textContent = `${current}${suffix}`;
-
-        if (progress < 1) {
-            requestAnimationFrame(update);
-        }
-    };
-
-    requestAnimationFrame(update);
 };
 
 const renderCollabs = () => {
@@ -137,6 +102,33 @@ const renderCollabs = () => {
 let cachedLogoElements = null;
 let countdownInterval = null;
 
+const escapeHtml = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const parseLocalDate = (dateString) => {
+    const [year, month, day] = String(dateString || '').split('-').map(Number);
+    if (!year || !month || !day) return new Date(dateString);
+    return new Date(year, month - 1, day);
+};
+
+const combineEventDateTime = (event) => {
+    if (event?.startDate) return new Date(event.startDate);
+    return new Date(`${event.date}T${event.time || '00:00'}`);
+};
+
+const getEventUrlId = (event) => event?.slug || event?.id || '';
+const isUpcomingEvent = (event) => {
+    if (event?.timeStatus) return event.timeStatus === 'upcoming';
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return parseLocalDate(event.date) >= today;
+};
+
 const applyThemeToCollabs = (theme = getCurrentTheme()) => {
     if (!cachedLogoElements) {
         cachedLogoElements = document.querySelectorAll('.collab-logo-img');
@@ -152,9 +144,11 @@ const applyThemeToCollabs = (theme = getCurrentTheme()) => {
 
 
 const createHomeEventCard = (event) => {
-    const dateObj = new Date(event.date);
-    const month = dateObj.toLocaleDateString('tr-TR', { month: 'short' });
-    const day = dateObj.toLocaleDateString('tr-TR', { day: 'numeric' });
+    const localizedEvent = getLocalizedItem(event);
+    const dateObj = parseLocalDate(event.date);
+    const locale = getLocale();
+    const month = dateObj.toLocaleDateString(locale, { month: 'short' });
+    const day = dateObj.toLocaleDateString(locale, { day: 'numeric' });
 
     return `
         <div class="home-event-card" data-event-id="${event.id}">
@@ -164,10 +158,10 @@ const createHomeEventCard = (event) => {
             </div>
             <div class="home-event-info">
                 <div class="home-event-meta">
-                    <span class="home-event-time"><span class="material-symbols-outlined">schedule</span> ${event.time}</span>
-                    <span class="home-event-location"><span class="material-symbols-outlined">location_on</span> ${event.location}</span>
+                    <span class="home-event-time"><span class="material-symbols-outlined">schedule</span> ${escapeHtml(event.time)}</span>
+                    <span class="home-event-location"><span class="material-symbols-outlined">location_on</span> ${escapeHtml(localizedEvent.location)}</span>
                 </div>
-                <h3 class="home-event-title">${event.title}</h3>
+                <h3 class="home-event-title">${escapeHtml(localizedEvent.title)}</h3>
             </div>
             <div class="home-event-action">
                 <span class="material-symbols-outlined">arrow_forward</span>
@@ -178,24 +172,22 @@ const createHomeEventCard = (event) => {
 
 const renderHomeEvents = () => {
     const container = document.getElementById('homeEventsList');
+    if (!container) return;
+
     container.style.display = 'flex';
     container.style.flexDirection = 'column';
     container.style.gap = '16px';
 
-    if (!container) return;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
     const upcomingEvents = events
-        .filter(event => new Date(event.date) >= today)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter(isUpcomingEvent)
+        .sort((a, b) => combineEventDateTime(a) - combineEventDateTime(b))
         .slice(0, 3);
 
     if (!upcomingEvents.length) {
         container.innerHTML = `
             <div class="empty-state">
                 <span class="material-symbols-outlined">event_busy</span>
-                <p>We're finalizing our next round of events. Check back soon!</p>
+                <p>${t('home.emptyEvents')}</p>
             </div>
         `;
     } else {
@@ -207,37 +199,39 @@ const renderHomeEvents = () => {
         card.addEventListener('click', () => {
             const eventId = card.getAttribute('data-event-id');
             if (eventId) {
-                window.location.href = `events.html?eventId=${eventId}`;
+                const event = events.find(item => item.id === eventId);
+                const eventUrlId = getEventUrlId(event) || eventId;
+                window.location.href = `events.html?eventId=${encodeURIComponent(eventUrlId)}`;
             }
         });
     });
 };
 
-const combineEventDateTime = (event) => {
-    return new Date(`${event.date}T${event.time}`);
-};
-
 const getNextEvent = () => {
     if (!events?.length) return null;
-    const sorted = [...events].sort((a, b) => combineEventDateTime(a) - combineEventDateTime(b));
-    const now = new Date();
-    return sorted.find(event => combineEventDateTime(event) >= now) || sorted[sorted.length - 1];
+    return events
+        .filter(isUpcomingEvent)
+        .sort((a, b) => combineEventDateTime(a) - combineEventDateTime(b))[0] || null;
 };
 
 const startEventCountdown = () => {
     const countdownEl = document.getElementById('eventCountdown');
     const nextEvent = getNextEvent();
 
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
     if (!countdownEl || !nextEvent) {
         if (countdownEl) {
             countdownEl.style.display = 'none';
+            countdownEl.innerHTML = '';
         }
         return;
     }
 
-    if (countdownInterval) {
-        clearInterval(countdownInterval);
-    }
+    countdownEl.style.display = '';
 
     const renderCountdown = () => {
         const now = new Date();
@@ -248,9 +242,9 @@ const startEventCountdown = () => {
             countdownEl.innerHTML = `
                 <span>
                     <span class="material-symbols-outlined">celebration</span>
-                    Happening now!
+                    ${escapeHtml(t('home.happeningNow'))}
                 </span>
-                <span class="countdown-event-name">${nextEvent.title}</span>
+                <span class="countdown-event-name">${escapeHtml(getLocalizedItem(nextEvent).title)}</span>
             `;
             clearInterval(countdownInterval);
             return;
@@ -265,7 +259,7 @@ const startEventCountdown = () => {
                 <span class="material-symbols-outlined">hourglass_bottom</span>
                 ${days}d ${hours}h ${minutes}m
             </span>
-            <span class="countdown-event-name">${nextEvent.title}</span>
+            <span class="countdown-event-name">${escapeHtml(getLocalizedItem(nextEvent).title)}</span>
         `;
     };
 
@@ -275,26 +269,27 @@ const startEventCountdown = () => {
 
 
 const createBlogCard = (post) => {
+    const localizedPost = getLocalizedItem(post);
     const categoryMap = {
-        'Etkinlikler': 'web-dev',
-        'Geliştirme': 'web-dev',
-        'Yapay Zeka': 'ai-ml',
-        'Web': 'web-dev',
-        'Cloud': 'cloud'
+        events: 'web-dev',
+        development: 'web-dev',
+        ai: 'ai-ml',
+        web: 'web-dev',
+        cloud: 'cloud'
     };
 
-    const categoryClass = categoryMap[post.category] || 'web-dev';
-    const categoryDisplay = post.category;
+    const categoryClass = categoryMap[post.categoryKey] || 'web-dev';
+    const categoryDisplay = localizedPost.category;
 
     return `
         <div class="blog-card" data-category="${categoryClass}" data-blog-id="${post.id}">
             <div class="blog-content">
                 <div class="blog-category category-${categoryClass}">${categoryDisplay}</div>
-                <h3 class="blog-title">${post.title}</h3>
-                <p class="blog-excerpt">${post.excerpt}</p>
+                <h3 class="blog-title">${localizedPost.title}</h3>
+                <p class="blog-excerpt">${localizedPost.excerpt}</p>
                 <div class="blog-meta">
                     <span>${post.author} • ${formatBlogDate(post.date)}</span>
-                    <span>${post.readTime}</span>
+                    <span>${localizedPost.readTime}</span>
                 </div>
             </div>
         </div>
@@ -303,7 +298,7 @@ const createBlogCard = (post) => {
 
 const formatBlogDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('tr-TR', {
+    return date.toLocaleDateString(getLocale(), {
         weekday: 'short',
         month: 'short',
         day: 'numeric'
@@ -324,7 +319,10 @@ const renderHomeBlog = () => {
         observeVisibility(card);
 
         card.addEventListener('click', () => {
-            window.location.href = 'blog.html';
+            const blogId = card.getAttribute('data-blog-id');
+            if (blogId) {
+                window.location.href = `blog.html?blogId=${encodeURIComponent(blogId)}`;
+            }
         });
     });
 };
@@ -336,14 +334,14 @@ const createTrackCard = (track, index) => {
             <div class="track-icon">
                 <span class="material-symbols-outlined">${track.icon}</span>
             </div>
-            <h3 class="track-title">${track.title}</h3>
-            <p class="track-description">${track.description}</p>
+            <h3 class="track-title">${t(track.titleKey)}</h3>
+            <p class="track-description">${t(track.descriptionKey)}</p>
             <div class="track-tags">
                 ${track.tags.map(tag => `<span class="track-tag">${tag}</span>`).join('')}
             </div>
             <div class="track-footer">
-                <span>${track.level}</span>
-                <span>${track.duration}</span>
+                <span>${t(track.levelKey)}</span>
+                <span>${t(track.durationKey)}</span>
             </div>
         </div>
     `;
@@ -363,36 +361,6 @@ const renderFocusTracks = () => {
         });
     });
 };
-
-
-const initNewsletterForm = () => {
-    const form = document.getElementById('newsletterForm');
-    if (!form) return;
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const emailInput = form.querySelector('input[type="email"]');
-        const email = emailInput?.value;
-
-        if (email) {
-            const btn = form.querySelector('.btn');
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = `
-                <span class="material-symbols-outlined">check_circle</span>
-                Kaydedildi!
-            `;
-            btn.style.background = 'var(--gdg-green)';
-
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.style.background = '';
-                emailInput.value = '';
-            }, 3000);
-        }
-    });
-};
-
 
 const initFloatingCta = () => {
     const floatingCta = document.getElementById('floatingCta');
@@ -428,22 +396,30 @@ const initFloatingCta = () => {
     handleScroll();
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderStats();
-    renderCollabs();
+document.addEventListener('DOMContentLoaded', async () => {
     renderHomeEvents();
     renderHomeBlog();
     renderFocusTracks();
     startEventCountdown();
-    initNewsletterForm();
     initFloatingCta();
-    applyThemeToCollabs();
+    
 
     initOrbVisibilityControl();
     initPageVisibilityControl();
 
     document.addEventListener('themechange', (event) => {
         cachedLogoElements = null;
-        applyThemeToCollabs(event.detail || getCurrentTheme());
+        
+    });
+
+    events = await loadGdgEvents();
+    renderHomeEvents();
+    startEventCountdown();
+
+    document.addEventListener('languagechange', () => {
+        renderHomeEvents();
+        renderHomeBlog();
+        renderFocusTracks();
+        startEventCountdown();
     });
 });
